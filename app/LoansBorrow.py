@@ -6,7 +6,7 @@ from datetime import date
 import time
 
 USERNAME = "root"
-PASSWORD = "Crunchyapples99"
+PASSWORD = "m"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -48,22 +48,6 @@ def loan_books():
 
     win = Tk()
 
-    # INSERT DATA INTO BORROW
-    sql5 = "INSERT INTO Borrow VALUES ('{}', '{}', '{}', null)".format(accessionNo, borrow_date, membershipID)
-    cursor.execute(sql5)
-
-    win.mainloop()
-
-def popup_window():
-
-    win = Tk()
-
-    global accessionNo
-    global membershipID
-    global borrow_date
-    accessionNo = accessionNo_field.get()
-    membershipID = membershipID_field.get()
-
     # Predicate: Whether book is in database
     # Predicate: Whether member is in database
     # Predicate: Whether book is on loan
@@ -74,7 +58,7 @@ def popup_window():
     book_valid = cursor.execute(sql01).fetchall()
     sql02 = "SELECT * FROM Members WHERE (memberId = '{}')".format(membershipID)
     member_valid = cursor.execute(sql02).fetchall()
-    
+
     # If book is in database and member is in database
     if (len(book_valid) > 0 and len(member_valid) > 0):
         sql1 = "SELECT * FROM Borrow WHERE (accessionNo = '{}' AND returnDate IS null)".format(accessionNo)
@@ -124,35 +108,16 @@ def popup_window():
             btn.pack()
         else:
             # Success
+            label1 = Label(win, text = "Success!", font = TITLE_FONT)
+            label1.pack()
+            label2 = Label(win, text = "Book has been borrowed.", font = DEFAULT_FONT)
+            label2.pack() 
+            btn = Button(win, text = "Back to Borrow Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
+            btn.pack()
+
             # INSERT DATA INTO BORROW
-            toplabel = Label(win, text = "Confirm Loan Details to Be Correct", font = TITLE_FONT)
-            toplabel.grid(row = 1, column = 2, sticky = NSEW)
-            get_query = "SELECT * FROM Book WHERE accessionNo = '{}'".format(accessionNo)
-            get_member = "SELECT * FROM Members WHERE memberId = '{}'".format(membershipID)
-            book_title = cursor.execute(get_query).fetchall()[0][1]
-            datetimeobj1 = date.today()
-            borrow_date = datetimeobj1.strftime("%Y/%m/%d")
-            member_name = cursor.execute(get_member).fetchall()[0][1]
-            datetimeobj2 = datetimeobj1 + timedelta(days = 14)
-            due_date = datetimeobj2.strftime("%Y/%m/%d")
-
-            label1 = Label(win, text = "Accession Number: '{}'".format(accessionNo), font = DEFAULT_FONT, bg = "#FFE45E")
-            label1.grid(row = 2, column = 2, sticky = W)
-            label2 = Label(win, text = "Book Title: '{}'".format(book_title), font = DEFAULT_FONT, bg = "#FFE45E")
-            label2.grid(row = 3, column = 2, sticky = W)
-            label3 = Label(win, text = "Borrow Date: '{}'".format(borrow_date), font = DEFAULT_FONT, bg = "#FFE45E")
-            label3.grid(row = 4, column = 2, sticky = W)
-            label4 = Label(win, text = "Membership ID: '{}'".format(membershipID), font = DEFAULT_FONT, bg = "#FFE45E")
-            label4.grid(row = 5, column = 2, sticky = W)
-            label5 = Label(win, text = "Member Name: '{}'".format(member_name), font = DEFAULT_FONT, bg = "#FFE45E")
-            label5.grid(row = 6, column = 2, sticky = W)
-            label6 = Label(win, text = "Due Date: '{}'".format(due_date), font = DEFAULT_FONT, bg = "#FFE45E")
-            label6.grid(row = 7, column = 2, sticky = W)
-
-            button1 = Button(win, text = "Confirm Loan", font = DEFAULT_FONT, bg = "#5AA9E6", command = loan_books)
-            button1.grid(row = 8, column = 2)
-            button2 = Button(win, text = "Back to Borrow Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
-            button2.grid(row = 8, column = 3) 
+            sql5 = "INSERT INTO Borrow VALUES ('{}', '{}', '{}', null)".format(accessionNo, borrow_date, membershipID)
+            cursor.execute(sql5)
     else:
         label1 = Label(win, text = "Error!", font = TITLE_FONT)
         label1.pack()
@@ -161,4 +126,45 @@ def popup_window():
         btn = Button(win, text = "Back to Borrow Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
         btn.pack()
 
+    win.mainloop()
+
+def popup_window():
+
+    win = Tk()
+
+    global accessionNo
+    global membershipID
+    global borrow_date
+    accessionNo = accessionNo_field.get()
+    membershipID = membershipID_field.get()
+    
+    toplabel = Label(win, text = "Confirm Loan Details to Be Correct", font = TITLE_FONT)
+    toplabel.grid(row = 1, column = 2, sticky = NSEW)
+    get_query = "SELECT * FROM Book WHERE accessionNo = '{}'".format(accessionNo)
+    get_member = "SELECT * FROM Members WHERE memberId = '{}'".format(membershipID)
+    book_title = cursor.execute(get_query).fetchall()[0][1]
+    datetimeobj1 = date.today()
+    borrow_date = datetimeobj1.strftime("%Y/%m/%d")
+    member_name = cursor.execute(get_member).fetchall()[0][1]
+    datetimeobj2 = datetimeobj1 + timedelta(days = 14)
+    due_date = datetimeobj2.strftime("%Y/%m/%d")
+
+    label1 = Label(win, text = "Accession Number: '{}'".format(accessionNo), font = DEFAULT_FONT, bg = "#FFE45E")
+    label1.grid(row = 2, column = 2, sticky = W)
+    label2 = Label(win, text = "Book Title: '{}'".format(book_title), font = DEFAULT_FONT, bg = "#FFE45E")
+    label2.grid(row = 3, column = 2, sticky = W)
+    label3 = Label(win, text = "Borrow Date: '{}'".format(borrow_date), font = DEFAULT_FONT, bg = "#FFE45E")
+    label3.grid(row = 4, column = 2, sticky = W)
+    label4 = Label(win, text = "Membership ID: '{}'".format(membershipID), font = DEFAULT_FONT, bg = "#FFE45E")
+    label4.grid(row = 5, column = 2, sticky = W)
+    label5 = Label(win, text = "Member Name: '{}'".format(member_name), font = DEFAULT_FONT, bg = "#FFE45E")
+    label5.grid(row = 6, column = 2, sticky = W)
+    label6 = Label(win, text = "Due Date: '{}'".format(due_date), font = DEFAULT_FONT, bg = "#FFE45E")
+    label6.grid(row = 7, column = 2, sticky = W)
+
+    button1 = Button(win, text = "Confirm Loan", font = DEFAULT_FONT, bg = "#5AA9E6", command = loan_books)
+    button1.grid(row = 8, column = 2)
+    button2 = Button(win, text = "Back to Borrow Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
+    button2.grid(row = 8, column = 3)
+    
     win.mainloop()
