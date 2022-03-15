@@ -6,7 +6,7 @@ import BooksWithdrawal
 from PIL import ImageTk, Image
 
 USERNAME = "root"
-PASSWORD = "Crunchyapples99"
+PASSWORD = "m"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
