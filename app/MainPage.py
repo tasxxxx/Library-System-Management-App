@@ -8,7 +8,7 @@ from fine_main import *
 from ReportPage import *
 
 USERNAME = "root"
-PASSWORD = "Crunchyapples99"
+PASSWORD = "m"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
