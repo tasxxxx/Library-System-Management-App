@@ -6,31 +6,11 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter.messagebox import showinfo
 
-
-# POP UP FUNCTION
-def popup():
-    response = messagebox.showwarning("This is my pop-up message!", "You may only enter one word per search field. Please try again.")
-    tk.Label(root, text=response).grid(row=0,column=0)
-
-def popup2():
-    response = messagebox.showwarning("This is my pop-up message!", "Please at least key in one search term.")
-    tk.Label(root, text=response).grid(row=0,column=0)
-    
-def popup3():
-    response = messagebox.showinfo("This is my pop-up message!", 
-                                      "You currently do not have any books on loan.")
-    tk.Label(root, text=response).grid(row=0,column=0)
-
-def popup4():
-    response = messagebox.showwarning("This is my pop-up message!", 
-                                      "Invalid Membership ID!")
-    tk.Label(root, text=response).grid(row=0,column=0)
-
 # 11 FUNCTION FOR BOOK SEACRH
 def book_search():
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Dcmmq9ck5s24!"
+    PASSWORD = "Hoepeng.0099"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -56,7 +36,7 @@ def book_search():
     tree.heading('publisher', text='Publisher')
     tree.heading('publicationYear', text='Publication Year')
 
-    # Query the Database 
+   # Query the Database 
     # 1. Check that only one word has been used for the search fields/attributes
     t = title_entry.get()
     a = authors_entry.get()
@@ -75,8 +55,11 @@ def book_search():
             book_query[field] = entry 
     
     if (len(t.split()) > 1 or len(a.split()) > 1 or len(i.split()) > 1 or len(p.split()) > 1 or len(py.split()) > 1):
-        tk.Button(top, text="Popup", command=popup).pack()
-    
+            root.title("ERROR")
+            error_label = tk.Label(root, text = "ERROR: You may only enter one word per search field. Please try again.")
+            error_label.grid(row = 0, column = 0)
+            # back to main page button
+            btn = tk.Button(root, text="Back to Reports Menu",command=root.destroy).grid(row=1, column=0)
     else:
         statement = '''SELECT b.accessionNo, b.title, a.author, b.isbn, b.publisher, b.publicationYear 
                     FROM Book b 
@@ -138,9 +121,9 @@ def book_search():
 # 15 FUNCTION TO SHOW BOOKS ON LOAN PER MEMBER
 def mem_books():
     
-    # Create a database or connect to one
+     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Dcmmq9ck5s24!"
+    PASSWORD = "Hoepeng.0099" # your password
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -169,10 +152,10 @@ def mem_books():
     # Query the Database
     ## MEMBERSHIP_ID EXISTS HENCE CONDUCT QUERY 
     # 1. does membership id exist
-    id_exists = '''SELECT EXISTS(SELECT * FROM Borrow WHERE borrowMemberId = '{0}')'''.format(memberId_entry.get())
+    id_exists = '''SELECT EXISTS(SELECT * FROM Members WHERE memberId = '{0}')'''.format(memberId_entry.get())
     result = cursor.execute(id_exists).fetchall()
     
-    if result[0] == 1:
+    if result[0][0] == 1:
         # 2. membership id exists, check for whether books are on loan
         members = '''SELECT EXISTS(
                     SELECT b.accessionNo, b.title, a.author, b.isbn, b.publisher, b.publicationYear 
@@ -182,8 +165,11 @@ def mem_books():
                     WHERE borrowMemberId = '{0}')'''.format(memberId_entry.get())
         results = cursor.execute(members).fetchall()
         
-        if results[0] == 0:
-            tk.Button(root, text="Press Me!", command=popup3).grid(row=0, column=0)
+        # Member does not have any books on loan.
+        if results[0][0] == 0:
+            root.title("INFO")
+            error_label = tk.Label(root, text = "INFO: You currently do not have any books on loan.")
+            error_label.grid(row = 0, column = 0)
             # back to main page button
             btn = tk.Button(root, text="Back to Reports Menu",command=root.destroy).grid(row=1, column=0)
 
@@ -215,8 +201,10 @@ def mem_books():
             btn = tk.Button(root, text="Back to Reports Menu",command=root.destroy).grid(row=1, column=0)
 
     else:
-        tk.Button(root, text="Press Me!", command=popup4).grid(row=0, column=0)
-        
+        root.title("ERROR")
+        error_label = tk.Label(root, text = "ERROR: Invalid Membership ID!")
+        error_label.grid(row = 0, column = 0)
+            
         # back to main page button
         btn = tk.Button(root, text="Back to Reports Menu",command=root.destroy).grid(row=1, column=0)
         
@@ -279,7 +267,7 @@ def books_on_loan():
 
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Dcmmq9ck5s24!"
+    PASSWORD = "Hoepeng.0099"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -351,7 +339,7 @@ def books_on_reservation():
     
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Dcmmq9ck5s24!"
+    PASSWORD = "Hoepeng.0099"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -415,7 +403,7 @@ def outstanding_fines():
     
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Dcmmq9ck5s24!"
+    PASSWORD = "Hoepeng.0099"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -508,7 +496,7 @@ def reportsMenu():
 
     root = tk.Tk() 
     root.title("Library System")
-    root.geometry("600x400")
+    root.geometry("600x410")
 
     # Top Half of Page
     frame = tk.LabelFrame(root, padx=5, pady=5)
@@ -534,7 +522,10 @@ def reportsMenu():
     outstanding_fines_button.grid(row=4, column=1, columnspan=2)
     booksonloanToMember_button = tk.Button(root, text="Books on Loan to Member", command=open5)
     booksonloanToMember_button.grid(row=5, column=1, columnspan=2)
+    # back to main page button
+    btn = tk.Button(root, text="Back to Main Menu",command=root.destroy).grid(row=6, column=1)
 
     root.mainloop()
 
 reportsMenu()
+
