@@ -88,7 +88,7 @@ def book_search():
         
         # If there is a field entry for author:
         if len(a) > 0: 
-            author_condition = " WHERE a.accessionNo IN (SELECT accessionNo FROM Author WHERE author LIKE '%%{}%%')".format(a)
+            author_condition = " WHERE a.accessionNo IN (SELECT accessionNo FROM Author WHERE author REGEXP '(^|[[:space:]]){}([[:space:]]|$)')".format(a)
             add_on_condition += author_condition 
             rotation += 1 
             
@@ -97,7 +97,7 @@ def book_search():
                 if field == 'isbn' or field == 'publicationYear':
                     book_cond = " {} {} = '{}' ".format(CLAUSE[rotation], field, val)
                 else:
-                    book_cond = " {} {} LIKE '%%{}%%' ".format(CLAUSE[rotation], field, val)
+                    book_cond = " {} {} REGEXP '(^|[[:space:]]){}([[:space:]]|$)' ".format(CLAUSE[rotation], field, val)
                 if rotation == 0: 
                     rotation += 1
                 add_on_condition += book_cond
