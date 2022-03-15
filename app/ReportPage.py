@@ -30,7 +30,7 @@ def popup4():
 def book_search():
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Crunchyapples99"
+    PASSWORD = "Dcmmq9ck5s24!"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -80,8 +80,8 @@ def book_search():
     else:
         statement = '''SELECT b.accessionNo, b.title, a.author, b.isbn, b.publisher, b.publicationYear 
                     FROM Book b 
-                    JOIN Borrow bo ON b.accessionNo = bo.accessionNo 
-                    JOIN Author a ON bo.accessionNo = a.accessionNo'''
+                    JOIN Author a ON b.accessionNo = a.accessionNo'''
+        
         add_on_condition = ""
         CLAUSE = ["WHERE", "AND"]
         rotation = 0 
@@ -137,7 +137,7 @@ def mem_books():
     
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Crunchyapples99"
+    PASSWORD = "Dcmmq9ck5s24!"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -276,7 +276,7 @@ def books_on_loan():
 
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Crunchyapples99"
+    PASSWORD = "Dcmmq9ck5s24!"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -348,7 +348,7 @@ def books_on_reservation():
     
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Crunchyapples99"
+    PASSWORD = "Dcmmq9ck5s24!"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -412,7 +412,7 @@ def outstanding_fines():
     
     # Create a database or connect to one
     USERNAME = "root"
-    PASSWORD = "Crunchyapples99"
+    PASSWORD = "Dcmmq9ck5s24!"
     HOST = "localhost"
     PORT = 3306
     DB = "Library"
@@ -533,3 +533,5 @@ def reportsMenu():
     booksonloanToMember_button.grid(row=5, column=1, columnspan=2)
 
     root.mainloop()
+
+reportsMenu()
