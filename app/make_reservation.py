@@ -3,7 +3,7 @@ from tkinter import *
 from datetime import *
 
 USERNAME = "root"
-PASSWORD = "Crunchyapples99"
+PASSWORD = "Dcmmq9ck5s24!"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -27,7 +27,6 @@ def add_reservation_record():
         got_fine = cursor.execute(check_fine).fetchall()
 
         if not got_fine:
-        
             #check only 0 or 1 book reserved
             check_reservations = "SELECT * FROM Reservation WHERE reservationMemberId = '{}'".format(member_id)
             reservations_made = len(cursor.execute(check_reservations).fetchall())
@@ -58,7 +57,7 @@ def add_reservation_record():
             back_button.grid(row = 1, column = 0)
     else:
         win.title("ERROR")
-        error_label = Label(win, text = "ERROR: Book is either not on loan or already reserved")
+        error_label = Label(win, text = "ERROR: Book is either on loan or already reserved")
         error_label.grid(row = 0, column = 0)
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
         back_button.grid(row = 1, column = 0)
