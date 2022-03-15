@@ -3,7 +3,7 @@ from tkinter import *
 from datetime import *
 
 USERNAME = "root"
-PASSWORD = "Crunchyapples99"
+PASSWORD = "Dcmmq9ck5s24!"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -23,7 +23,7 @@ def complete_payment():
         fine_amount = got_fine[0][1]
 
         #if correct amount
-        if fine_amount == payment_amount:
+        if fine_amount == int(payment_amount):
             #add payment record
             insert_payment = "INSERT INTO Payment VALUES ('{}', '{}')".format(member_id, payment_date)
             cursor.execute(insert_payment)
