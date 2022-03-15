@@ -1,7 +1,7 @@
 import sqlalchemy as db
 from tkinter import *
 
-engine = db.create_engine("mysql://root:Crunchyapples99@localhost:3306/Library", echo = False)
+engine = db.create_engine("mysql://root:m@localhost:3306/Library", echo = False)
 cursor = engine.connect()
 
 TITLE_FONT = ("Bahnschrift", 15)
@@ -93,7 +93,7 @@ def popup_window():
         cursor.execute(add_book)
 
         # INSERT DATA INTO AUTHOR TABLE
-        authorArr = authors.split(",")
+        authorArr = authors.split(", ")
         for author in authorArr:
             add_author = "INSERT INTO Author (accessionNo, author) VALUES ('{}', '{}')".format(accessionNo, author)
             cursor.execute(add_author)
