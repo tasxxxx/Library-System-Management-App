@@ -88,7 +88,7 @@ def book_search():
         
         # If there is a field entry for author:
         if len(a) > 0: 
-            author_condition = " WHERE accessionNo IN (SELECT accessionNo FROM Author WHERE author LIKE '%%{}%%')".format(a)
+            author_condition = " WHERE a.accessionNo IN (SELECT accessionNo FROM Author WHERE author LIKE '{}')".format(a)
             add_on_condition += author_condition 
             rotation += 1 
             
