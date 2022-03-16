@@ -2,8 +2,13 @@ import sqlalchemy as db
 from tkinter import *
 from datetime import *
 
+FONT = 'Arial'
+FONT_SIZE = 25
+SMALL_FONT_SIZE = 10
+STYLE = 'bold'
+
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "" ## enter password
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -148,32 +153,44 @@ def confirmation_window():
 def reservation_details():
     win = Tk()
     win.title("Reserve a Book")
+    win.geometry("1920x1080")
 
     #creating the fields + labels for slide 34
     global accession_no_field
     global membership_id_field
     global reserve_date_field
     
-    accession_no_field = Entry(win, width = 30)
-    accession_no_field.grid(row = 0, column = 1)
+    instructions = Label(win, text='To Reserve a Book, Please Enter Information Below:', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
+    instructions.config(font=(FONT, FONT_SIZE, STYLE))
+    instructions.place(relx=0.5, rely=0.09, anchor="center")
+
     accession_no_label = Label(win, text = "Accession Number")
-    accession_no_label.grid(row = 0, column = 0)
+    accession_no_label.config(font=(FONT, FONT_SIZE, STYLE))
+    accession_no_label.place(relx=0.35, rely=0.35, anchor="center")
+    accession_no_field = Entry(win, width = 60)
+    accession_no_field.place(relx=0.65, rely=0.35, width = 660, height = 40, anchor="center")
 
-    membership_id_field = Entry(win, width = 30)
-    membership_id_field.grid(row = 1, column = 1)
     membership_id_label = Label(win, text = "Membership ID")
-    membership_id_label.grid(row = 1, column = 0)
+    membership_id_label.config(font=(FONT, FONT_SIZE, STYLE))
+    membership_id_label.place(relx=0.35, rely=0.45, anchor="center")
+    membership_id_field = Entry(win, width = 60)
+    membership_id_field.place(relx=0.65, rely=0.45, width = 660, height = 40, anchor="center")
 
-    reserve_date_field = Entry(win, width = 30)
-    reserve_date_field.grid(row = 2, column = 1)
     reserve_date_label = Label(win, text = "Reserve Date")
-    reserve_date_label.grid(row = 2, column = 0)
+    reserve_date_label.config(font=(FONT, FONT_SIZE, STYLE))
+    reserve_date_label.place(relx=0.35, rely=0.55, anchor="center")
+    reserve_date_field = Entry(win, width = 60)
+    reserve_date_field.place(relx=0.65, rely=0.55, width = 660, height = 40, anchor="center")
 
     reserve_button = Button(win, text = "Reserve Book", command = confirmation_window)
-    reserve_button.grid(row = 3, column = 0)
+    reserve_button.config(font=(FONT, FONT_SIZE, STYLE))
+    reserve_button.place(relx=0.3, rely=0.8, anchor="center")
 
     back_button = Button(win, text = "Back to Reservations Menu", command = win.destroy)
-    back_button.grid(row = 3, column = 3)
+    back_button.config(font=(FONT, FONT_SIZE, STYLE))
+    back_button.place(relx=0.7, rely=0.8, anchor="center")
+
+
 
     win.mainloop()
 
