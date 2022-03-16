@@ -4,41 +4,51 @@ from datetime import timedelta
 from datetime import datetime
 
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "mysqlUbae!!1"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
 
+FONT = 'Arial'
+FONT_SIZE = 25
+SMALL_FONT_SIZE = 10
+STYLE = 'bold'
+
 engine = db.create_engine('mysql://{0}:{1}@{2}:{3}/{4}'.format(USERNAME, PASSWORD, HOST, PORT, DB), echo = False)
 cursor = engine.connect()
-
-TITLE_FONT = ("Bahnschrift", 15)
-DEFAULT_FONT = ("Bahnschrift", 11)
 
 def loansReturn():
 
     root = Tk()
+    root.title("Return")
+    root.geometry("1920x1080")
+    root.configure(bg = "white")
 
     global accessionNo_field
     global returndate_field
 
-    toplabel = Label(root, text = "To Return a Book, Please Enter Information Below:", font = TITLE_FONT, bg = "#5AA9E6")
-    toplabel.grid(row = 1, column = 2, sticky = NSEW)
+    toplabel = Label(root, text = "To Return a Book, Please Enter Information Below:", fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
+    toplabel.config(font=(FONT, FONT_SIZE, STYLE))
+    toplabel.place(relx=0.5, rely=0.09, anchor="center")
 
-    label1 = Label(root, text = "Accession Number", font = DEFAULT_FONT, bg = "#FFE45E")
-    label1.grid(row = 2, column = 2)
-    label2 = Label(root, text = "Return Date", font = DEFAULT_FONT, bg = "#FFE45E")
-    label2.grid(row = 3, column = 2)
+    label1 = Label(root, text = "Accession Number", bg = "#FFE45E")
+    label1.config(font=(FONT, FONT_SIZE, STYLE))
+    label1.place(relx=0.4, rely=0.4, anchor="center")
+    label2 = Label(root, text = "Return Date", bg = "#FFE45E")
+    label2.config(font=(FONT, FONT_SIZE, STYLE))
+    label2.place(relx=0.4, rely=0.6, anchor="center")
 
     accessionNo_field = Entry(root, width = 30)
-    accessionNo_field.grid(row = 2, column = 3, sticky = W)
+    accessionNo_field.place(relx=0.6, rely=0.4, anchor="center")
     returndate_field = Entry(root, width = 30)
-    returndate_field.grid(row = 3, column = 3, sticky = W)
+    returndate_field.place(relx=0.6, rely=0.6, anchor="center")
 
-    button1 = Button(root, text = "Return Book", font = DEFAULT_FONT, bg = "#5AA9E6", command = popup_window)
-    button1.grid(row = 8, column = 2)
-    button2 = Button(root, text = "Back to Loans Menu", font = DEFAULT_FONT, bg = "#5AA9E6", command = root.destroy)
-    button2.grid(row = 8, column = 3)
+    button1 = Button(root, text = "Return Book", bg = "#5AA9E6", command = popup_window)
+    button1.config(font=(FONT, FONT_SIZE, STYLE))
+    button1.place(relx=0.4, rely=0.9, anchor="center")
+    button2 = Button(root, text = "Back to Loans Menu", bg = "#5AA9E6", command = root.destroy)
+    button2.config(font=(FONT, FONT_SIZE, STYLE))
+    button2.place(relx=0.6, rely=0.9, anchor="center")
 
     root.mainloop()
 
@@ -63,20 +73,32 @@ def return_books():
             sql4 = "INSERT INTO Fine VALUES ('{}', '{}')".format(membershipID, fineAmount)
             cursor.execute(sql4)
 
-        label1 = Label(win, text = "Error!", font = TITLE_FONT, bg = "#5AA9E6")
-        label1.pack()
-        label2 = Label(win, text = "Book returned successfully but has fines.", font = DEFAULT_FONT)
-        label2.pack() 
-        btn = Button(win, text = "Back to Return Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
-        btn.pack()
+        win.geometry("800x400")
+        win.configure(bg = "#eb1e1e")
+        win.title("Error")
+        label1 = Label(win, text = "Error!", bg = "#eb1e1e")
+        label1.place(relx=0.5, rely=0.1, anchor="center")
+        label1.config(font=(FONT, FONT_SIZE, STYLE))
+        label2 = Label(win, text = "Book returned successfully but has fines.", bg = "#eb1e1e")
+        label2.place(relx=0.5, rely=0.5, anchor="center")
+        label2.config(font=(FONT, FONT_SIZE, STYLE))
+        btn = Button(win, text = "Back to Return Function", bg = "#5AA9E6", command = win.destroy)
+        btn.place(relx=0.5, rely=0.9, anchor="center")
+        btn.config(font=(FONT, FONT_SIZE, STYLE))
     else:
         # Success
-        label1 = Label(win, text = "Success!", font = TITLE_FONT, bg = "#5AA9E6")
-        label1.pack()
-        label2 = Label(win, text = "Book returned successfully.", font = DEFAULT_FONT)
-        label2.pack() 
-        btn = Button(win, text = "Back to Return Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
-        btn.pack()
+        win.geometry("800x400")
+        win.configure(bg = "#b0f556")
+        win.title("Success")
+        label1 = Label(win, text = "Success!", bg = "#b0f556")
+        label1.place(relx=0.5, rely=0.1, anchor="center")
+        label1.config(font=(FONT, FONT_SIZE, STYLE))
+        label2 = Label(win, text = "Book returned successfully.", bg = "#b0f556")
+        label2.place(relx=0.5, rely=0.5, anchor="center")
+        label2.config(font=(FONT, FONT_SIZE, STYLE))
+        btn = Button(win, text = "Back to Return Function", bg = "#5AA9E6", command = win.destroy)
+        btn.place(relx=0.5, rely=0.9, anchor="center")
+        btn.config(font=(FONT, FONT_SIZE, STYLE))
 
         # UPDATE BORROW TABLE'S RETURN DATE FIELD
         sql4 = "UPDATE Borrow SET returnDate = '{}' WHERE (accessionNo = '{}' AND borrowDate = '{}')".format(return_date, accessionNo, borrowdate)
@@ -101,6 +123,10 @@ def popup_window():
     book_valid = cursor.execute(sql01).fetchall()
 
     if (len(book_valid) > 0):
+        win.geometry("400x800")
+        win.configure(bg = "#b0f556")
+        win.title("Confirmation")
+
         # Predicate: Does Return Date > Due Date
         sql1 = "SELECT * FROM Borrow WHERE (accessionNo = '{}' AND returnDate IS null)".format(accessionNo)
         membershipID = cursor.execute(sql1).fetchall()[0][2]
@@ -112,37 +138,52 @@ def popup_window():
         if(a > duedate): # If return date exceeds due date, only update fine amount
             fineAmount = (a - duedate).days
 
-        toplabel = Label(win, text = "Confirm Return Details To Be Correct", font = TITLE_FONT, bg = "#5AA9E6")
-        toplabel.grid(row = 1, column = 2, sticky = NSEW)
+        toplabel = Label(win, text = "Confirm Return Details To Be Correct", bg = "#b0f556")
+        toplabel.config(font=(FONT, FONT_SIZE, STYLE))
+        toplabel.place(relx=0.5, rely=0.09, anchor="center")
 
         get_query = "SELECT * FROM Book WHERE accessionNo = '{}'".format(accessionNo)
         get_member = "SELECT * FROM Members WHERE memberId = '{}'".format(membershipID)
         book_title = cursor.execute(get_query).fetchall()[0][1]
         member_name = cursor.execute(get_member).fetchall()[0][1]
 
-        label1 = Label(win, text = "Accession Number: '{}'".format(accessionNo), font = DEFAULT_FONT, bg = "#FFE45E")
-        label1.grid(row = 2, column = 2, sticky = W)
-        label2 = Label(win, text = "Book Title: '{}'".format(book_title), font = DEFAULT_FONT, bg = "#FFE45E")
-        label2.grid(row = 3, column = 2, sticky = W)
-        label3 = Label(win, text = "Membership ID: '{}'".format(membershipID), font = DEFAULT_FONT, bg = "#FFE45E")
-        label3.grid(row = 4, column = 2, sticky = W)
-        label4 = Label(win, text = "Member Name '{}'".format(member_name), font = DEFAULT_FONT, bg = "#FFE45E")
-        label4.grid(row = 5, column = 2, sticky = W)
-        label5 = Label(win, text = "Return Date: '{}'".format(return_date), font = DEFAULT_FONT, bg = "#FFE45E")
-        label5.grid(row = 6, column = 2, sticky = W)
-        label6 = Label(win, text = "Fine: $'{}'".format(fineAmount), font = DEFAULT_FONT, bg = "#FFE45E")
-        label6.grid(row = 7, column = 2, sticky = W)
+        label1 = Label(win, text = "Accession Number: '{}'".format(accessionNo), bg = "#FFE45E")
+        label1.config(font=(FONT, FONT_SIZE, STYLE))
+        label1.place(relx=0.2, rely=0.2, anchor="w")
+        label2 = Label(win, text = "Book Title: '{}'".format(book_title), bg = "#FFE45E")
+        label2.config(font=(FONT, FONT_SIZE, STYLE))
+        label2.place(relx=0.2, rely=0.3, anchor="w")
+        label3 = Label(win, text = "Membership ID: '{}'".format(membershipID), bg = "#FFE45E")
+        label3.config(font=(FONT, FONT_SIZE, STYLE))
+        label3.place(relx=0.2, rely=0.4, anchor="w")
+        label4 = Label(win, text = "Member Name '{}'".format(member_name), bg = "#FFE45E")
+        label4.config(font=(FONT, FONT_SIZE, STYLE))
+        label4.place(relx=0.2, rely=0.5, anchor="w")
+        label5 = Label(win, text = "Return Date: '{}'".format(return_date), bg = "#FFE45E")
+        label5.config(font=(FONT, FONT_SIZE, STYLE))
+        label5.place(relx=0.2, rely=0.6, anchor="w")
+        label6 = Label(win, text = "Fine: $'{}'".format(fineAmount), bg = "#FFE45E")
+        label6.config(font=(FONT, FONT_SIZE, STYLE))
+        label6.place(relx=0.2, rely=0.7, anchor="w")
 
-        button1 = Button(win, text = "Confirm Return", font = DEFAULT_FONT, bg = "#5AA9E6", command = return_books)
-        button1.grid(row = 8, column = 2)
-        button2 = Button(win, text = "Back to Return Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
-        button2.grid(row = 8, column = 3)
+        button1 = Button(win, text = "Confirm Return", bg = "#5AA9E6", command = return_books)
+        button1.config(font=(FONT, FONT_SIZE, STYLE))
+        button1.place(relx=0.3, rely=0.9, anchor="center")
+        button2 = Button(win, text = "Back to Return Function", bg = "#5AA9E6", command = win.destroy)
+        button2.config(font=(FONT, FONT_SIZE, STYLE))
+        button2.place(relx=0.6, rely=0.9, anchor="center")
     else:
-        label1 = Label(win, text = "Error!", font = TITLE_FONT)
-        label1.pack()
-        label2 = Label(win, text = "Book is invalid. Book has been returned or there is no such book. Please enter the correct details.", font = DEFAULT_FONT)
-        label2.pack() 
-        btn = Button(win, text = "Back to Return Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
-        btn.pack()
+        win.geometry("800x400")
+        win.configure(bg = "#eb1e1e")
+        win.title("Error")
+        label1 = Label(win, text = "Error!", bg = "#eb1e1e")
+        label1.place(relx=0.5, rely=0.1, anchor="center")
+        label1.config(font=(FONT, FONT_SIZE, STYLE))
+        label2 = Label(win, text = "Book is invalid. Book has been returned or there is no such book. Please enter the correct details.", bg = "#eb1e1e", wraplength = 700)
+        label2.place(relx=0.5, rely=0.5, anchor="center")
+        label2.config(font=(FONT, FONT_SIZE, STYLE))
+        btn = Button(win, text = "Back to Return Function", bg = "#5AA9E6", command = win.destroy)
+        btn.place(relx=0.5, rely=0.9, anchor="center")
+        btn.config(font=(FONT, FONT_SIZE, STYLE))
 
     win.mainloop()
