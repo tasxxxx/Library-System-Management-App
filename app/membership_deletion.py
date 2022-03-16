@@ -8,7 +8,7 @@ SMALL_FONT_SIZE = 10
 STYLE = 'bold'
 
 USERNAME = "root"
-PASSWORD = "" ## insert password
+PASSWORD = "" ## enter password
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -22,11 +22,17 @@ def delete(idinput):
 	cursor.execute(delete_member)
 
 	deletepopup = tk.Tk()
+	deletepopup.geometry("800x400")
+	deletepopup.configure(bg = "#b0f556")
+
 	label1 = tk.Label(deletepopup, text='Membership deleted', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
-	label1.pack()
+	label1.config(font=(FONT, FONT_SIZE, STYLE))
+	label1.place(relx=0.5, rely=0.15, anchor="center")
 
 	btn_back = tk.Button(deletepopup, text = "Back", command = lambda: [deletepopup.destroy(), win.destroy()])
-	btn_back.pack()
+	btn_back.config(font=(FONT, FONT_SIZE, STYLE))
+	btn_back.place(relx=0.5, rely=0.8, anchor="center")
+
 	
 	deletepopup.mainloop()
 
@@ -42,13 +48,20 @@ def deleteMember():
 	memberInfo = cursor.execute(sql2).fetchall()
 
 	win = tk.Tk()
+	win.geometry("800x400")
 
 	if len(memberInfo) == 0:
-		label1 = tk.Label(win, text='Error: No such member found', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
-		label1.pack()
+
+		win.configure(bg = "#b0f556")
+
+		label1 = tk.Label(win, text='Error: No such member found', fg='black', bg="#b0f556", relief='raised', width=60, height=3)
+		label1.config(font=(FONT, FONT_SIZE, STYLE))
+		label1.place(relx=0.5, rely=0.15, anchor="center")
 
 		btn_back = tk.Button(win, text = "Back", command = win.destroy)
-		btn_back.pack()
+		label1.config(font=(FONT, FONT_SIZE, STYLE))
+		btn_back.place(relx=0.5, rely=0.8, anchor="center")
+
 		win.mainloop()
 
 
@@ -84,34 +97,44 @@ def deleteMember():
 	# fail: TODO check loans, reservations and fines
 	# if got_fines or on_loan or got_reservation:
 	if got_fines or on_loan:
-		label1 = tk.Label(win, text="Error!", bg="#cc0505", fg= "#ffff00")
-		label1.pack()
-		label2 = tk.Label(win, text="Member has loans, reservations or outstanding fines.")
-		label2.pack()
+
+		win.configure(bg = "#eb1e1e")
+
+		label1 = tk.Label(win, text="Error!", bg="#eb1e1e", fg= "#ffff00")
+		label1.config(font=(FONT, FONT_SIZE, STYLE))
+		label1.place(relx=0.5, rely=0.15, anchor="center")
+
+		label2 = tk.Label(win, text="Member has loans, reservations or outstanding fines.", bg = "#eb1e1e")
+		label2.config(font=(FONT, FONT_SIZE, STYLE))
+		label2.place(relx=0.5, rely=0.3, anchor="center")
+
+
 		btn = tk.Button(win, text="Back to Delete Function", command=win.destroy)
-		btn.pack()
+		btn.config(font=(FONT, 20, STYLE))
+		btn.place(relx=0.5, rely=0.8, anchor='center')
 
 	# success, deletion SQL, reservations cascade in SQL
 	else:
 
+		win.configure(bg = "#b0f556")
+
 		memberInfo = "Member ID: {}\nName: {}\nFaculty: {}\nPhone Number: {}\nEmail Address: {}".format(memId, name, faculty, phoneNo, email)
 
-		titlelabel = tk.Label(win, text="Please Confirm Details to be Correct", bg ="#9ddd58", fg="black", width=30, height=2)
-		titlelabel.config(font=(FONT, FONT_SIZE, STYLE))
-		titlelabel.place(relx=0.5, rely=0.3, anchor="center")
-		#titlelabel.pack()
+		bodylabel = tk.Label(win, text=memberInfo, bg = "#b0f556", fg="#000000", width=30, height=12)
+		bodylabel.config(font=(FONT, 15, STYLE))
+		bodylabel.place(relx=0.5, rely=0.45, anchor="center")
 
-		bodylabel = tk.Label(win, text=memberInfo, fg="#000000", width=30, height=12)
-		bodylabel.config(font=(FONT, FONT_SIZE, STYLE))
-		bodylabel.place(relx=0.5, rely=0.55, anchor="center")
+		titlelabel = tk.Label(win, text="Please Confirm Details to be Correct", bg = "#b0f556", fg="black", width=30, height=2)
+		titlelabel.config(font=(FONT, 20, STYLE))
+		titlelabel.place(relx=0.5, rely=0.2, anchor="center")
 
-		confirm_delete_btn = tk.Button(win, text='Confirm Delete', padx=10, pady=10, command=lambda:delete(memId), bg='#27c0ab', borderwidth=5, relief='raised')
-		confirm_delete_btn.config(font=(FONT,20,STYLE))
-		confirm_delete_btn.place(relx=0.35, rely=0.8, anchor='center')
+		confirm_delete_btn = tk.Button(win, text='Confirm Deletion', padx=10, pady=10, command=lambda:delete(memId), bg='#27c0ab', borderwidth=5, relief='raised')
+		confirm_delete_btn.config(font=(FONT,15,STYLE))
+		confirm_delete_btn.place(relx=0.30, rely=0.8, anchor='center')
 
 		back_to_delete_btn = tk.Button(win, text='Back to Delete Function', padx=10, pady=10, command=win.destroy, bg='#27c0ab', borderwidth=5, relief='raised')
-		back_to_delete_btn.config(font=(FONT,20,STYLE), wraplength=300)
-		back_to_delete_btn.place(relx=0.65, rely=0.8, anchor='center')
+		back_to_delete_btn.config(font=(FONT,15,STYLE), wraplength=300)
+		back_to_delete_btn.place(relx=0.70, rely=0.8, anchor='center')
 
 
 	win.mainloop()
