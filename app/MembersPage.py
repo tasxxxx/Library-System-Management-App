@@ -3,6 +3,7 @@ from PIL import ImageTk, Image
 from membership_creation import createMembersMenu
 from membership_deletion import deleteMembersMenu
 from membership_update import updateMembersMenu
+from PIL import ImageTk, Image
 
 FONT = 'Arial'
 FONT_SIZE = 25
@@ -13,7 +14,16 @@ STYLE = 'bold'
 ### slide 4
 def membersMenu():
 
-	membMenu = tk.Tk()
+	membMenu = tk.Toplevel()
+
+	image = Image.open("bg1.jpg")
+	image = image.resize((1300, 650))
+
+	bg = ImageTk.PhotoImage(image)
+	canvas1 = tk.Canvas(membMenu, width = 1920, height = 1080)
+	canvas1.pack(fill = "both", expand =  True)
+	canvas1.create_image(0, 0, image = bg, anchor = "nw")
+
 	#membMenu = tk.Toplevel()
 	membMenu.title("Membership")
 	membMenu.geometry("1920x1080")

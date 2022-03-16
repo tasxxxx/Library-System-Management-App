@@ -2,6 +2,7 @@ import sqlalchemy as db
 import tkinter as tk
 from datetime import *
 from sqlalchemy.exc import IntegrityError, DataError, OperationalError
+from PIL import ImageTk, Image
 
 FONT = 'Arial'
 FONT_SIZE = 25
@@ -9,7 +10,7 @@ SMALL_FONT_SIZE = 10
 STYLE = 'bold'
 
 USERNAME = "root"
-PASSWORD = "" ## enter password
+PASSWORD = "Dcmmq9ck5s24!" ## insert password
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -44,30 +45,37 @@ def update():
 	newphoneno = ent_phoneNo.get()
 	newemail = ent_email.get()
 
-	slide13 = tk.Tk()
-	slide13.geometry("800x400")
-	slide13.configure(bg = "#b0f556")
+	slide13 = tk.Toplevel()
+
+	image = Image.open("bg1.jpg")
+	image = image.resize((1300, 650))
+
+	bg = ImageTk.PhotoImage(image)
+	canvas1 = tk.Canvas(slide13, width = 1920, height = 1080)
+	canvas1.pack(fill = "both", expand =  True)
+	canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
 	## check if fields are empty? sequence of the checking, alr check below
 
 
 	info = "Member ID: {}\nName: {}\nFaculty: {}\nPhone Number: {}\nEmail Address: {}".format(memId, newname, newfaculty, newphoneno, newemail)
 
-	bodylabel = tk.Label(slide13, text=info, bg = "#b0f556", fg="#000000", width=30, height=12)
-	bodylabel.config(font=(FONT, 15, STYLE))
-	bodylabel.place(relx=0.5, rely=0.50, anchor="center")
+	titlelabel = tk.Label(slide13, text="Please Confirm Updated Details to be Correct", fg="black")
+	titlelabel.config(font=(FONT, FONT_SIZE, STYLE))
+	titlelabel.place(relx=0.5, rely=0.3, anchor="center")
+	#titlelabel.pack()
 
-	titlelabel = tk.Label(slide13, text="Please Confirm Updated Details to be Correct", fg="black", bg = "#b0f556")
-	titlelabel.config(font=(FONT, 20, STYLE))
-	titlelabel.place(relx=0.5, rely=0.2, anchor="center")
+	bodylabel = tk.Label(slide13, text=info, fg="#000000", width=30, height=12)
+	bodylabel.config(font=(FONT, FONT_SIZE, STYLE))
+	bodylabel.place(relx=0.5, rely=0.55, anchor="center")
 
 	confirm_delete_btn = tk.Button(slide13, text='Confirm Update', padx=10, pady=10, command=lambda:confirmUpdate(memId, newname , newfaculty, newphoneno, newemail), bg='#27c0ab', borderwidth=5, relief='raised')
-	confirm_delete_btn.config(font=(FONT,15,STYLE))
-	confirm_delete_btn.place(relx=0.3, rely=0.8, anchor='center')
+	confirm_delete_btn.config(font=(FONT,20,STYLE))
+	confirm_delete_btn.place(relx=0.35, rely=0.8, anchor='center')
 
 	back_to_update_btn = tk.Button(slide13, text='Back to Update Function', padx=10, pady=10, command=slide13.destroy, bg='#27c0ab', borderwidth=5, relief='raised')
-	back_to_update_btn.config(font=(FONT,15,STYLE), wraplength=300)
-	back_to_update_btn.place(relx=0.7, rely=0.8, anchor='center')
+	back_to_update_btn.config(font=(FONT,20,STYLE), wraplength=300)
+	back_to_update_btn.place(relx=0.65, rely=0.8, anchor='center')
 
 	slide13.mainloop()
 
@@ -85,8 +93,16 @@ def updateMember():
 	global ent_email
 	global slide12
 
-	slide12 = tk.Tk()
-	
+	slide12 = tk.Toplevel()
+	slide12.geometry("1920x1080")
+
+	image = Image.open("bg1.jpg")
+	image = image.resize((1300, 650))
+
+	bg = ImageTk.PhotoImage(image)
+	canvas1 = tk.Canvas(slide12, width = 1920, height = 1080)
+	canvas1.pack(fill = "both", expand =  True)
+	canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
 	memId = ent_memId.get()
 
@@ -95,23 +111,15 @@ def updateMember():
 	memberInfo = cursor.execute(sql3).fetchall()
 
 	if len(memberInfo) == 0:
-		slide12.geometry("800x400")
-		slide12.configure(bg = "#eb1e1e")
-
-		label1 = tk.Label(slide12, text='Error: No such member found', fg='black', bg = "#eb1e1e", width=60, height=3)
-		label1.config(font=(FONT, 20, STYLE))
-		label1.place(relx=0.5, rely=0.15, anchor="center")
+		label1 = tk.Label(slide12, text='Error: No such member found', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
+		label1.pack()
 
 		btn_back = tk.Button(slide12, text = "Back", command = slide12.destroy)
-		btn_back.config(font=(FONT, 20, STYLE))
-		btn_back.place(relx=0.5, rely=0.8, anchor='center')
-
+		btn_back.pack()
 		slide12.mainloop()
 
 	## slide 12
 	else:
-
-		slide12.geometry("1920x1080")
 
 		instructions = tk.Label(slide12, text='Please Enter Requested Information Below:', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
 		instructions.config(font=(FONT, FONT_SIZE, STYLE))
@@ -149,11 +157,11 @@ def updateMember():
 		ent_email.place(relx=0.65, rely=0.65, width = 660, height = 40, anchor="center")
 
 		btn_updateMember = tk.Button(slide12, text = "Update Member", command = update)
-		btn_updateMember.config(font=(FONT, 15, STYLE))
+		btn_updateMember.config(font=(FONT, FONT_SIZE, STYLE))
 		btn_updateMember.place(relx=0.3, rely=0.8, anchor="center")
 
 		btn_backMembMenu = tk.Button(slide12, text = "Back to Membership Menu", command = slide12.destroy)
-		btn_backMembMenu.config(font=(FONT, 15, STYLE))
+		btn_backMembMenu.config(font=(FONT, FONT_SIZE, STYLE))
 		btn_backMembMenu.place(relx=0.7, rely=0.8, anchor="center")
 
 		slide12.mainloop()
@@ -169,72 +177,44 @@ def confirmUpdate(memberId, name, faculty, phoneNo, email):
 		slide12.destroy()
 
 	slide1415 = tk.Tk()
-	slide1415.geometry("800x400")
 
 	## slide 15
 	# check if fields are missing or incomplete
 	if name == "" or faculty == "" or phoneNo == "" or email == "":
-
-		slide1415.configure(bg = "#eb1e1e")
-
 		label1 = tk.Label(slide1415, text="Error!", bg="#cc0505", fg= "#ffff00")
-		label1.config(font=(FONT, 20, STYLE))
-		label1.place(relx=0.5, rely=0.15, anchor="center")
-
+		label1.pack()
 		label2 = tk.Label(slide1415, text="Missing or Incomplete fields.")
-		label2.config(font=(FONT, 20, STYLE))
-		label2.place(relx=0.5, rely=0.3, anchor="center")
-
+		label2.pack()
 		btn = tk.Button(slide1415, text="Back to Update Function", command= lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy()])
-		btn.config(font=(FONT, 20, STYLE))
-		btn.place(relx=0.5, rely=0.8, anchor='center')
-
+		btn.pack()
 
 	## slide 14
 	else:
 
 		try:
-
-			slide1415.configure(bg = "#b0f556")
-
 			update_member = """UPDATE Members SET memberName='{}', faculty='{}', phone={}, email='{}' WHERE memberId='{}';""".format(name,\
 			faculty, phoneNo, email, memberId)
 			cursor.execute(update_member)
 
-			label1 = tk.Label(slide1415, text="Success!", bg = "#b0f556")
-			label1.config(font=(FONT, 20, STYLE))
-			label1.place(relx=0.5, rely=0.15, anchor="center")
-
-			label2 = tk.Label(slide1415, text="ALS Membership Updated.", bg = "#b0f556")
-			label2.config(font=(FONT, 20, STYLE))
-			label2.place(relx=0.5, rely=0.3, anchor="center")
-
+			label1 = tk.Label(slide1415, text="Success!")
+			label1.pack()
+			label2 = tk.Label(slide1415, text="ALS Membership Updated.")
+			label2.pack()
 			btn1 = tk.Button(slide1415, text="Create Another Member", command=lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy(), updateMembMenu.destroy()])
-			btn1.config(font=(FONT, 15, STYLE))
-			btn1.place(relx=0.3, rely=0.8, anchor="center")
-
+			btn1.pack()					
 			btn2 = tk.Button(slide1415, text="Back to Update Function", command=lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy()])
-			btn2.config(font=(FONT, 15, STYLE))
-			btn2.place(relx=0.7, rely=0.8, anchor="center")
+			btn2.pack()
 
 			slide1415.mainloop()
 
 
 		except (IntegrityError, ValueError, OperationalError):
-
-			slide1415.configure(bg = "#eb1e1e")
-
 			label1 = tk.Label(slide1415, text="Error!", bg="#cc0505", fg= "#ffff00")
-			label1.config(font=(FONT, 20, STYLE))
-			label1.place(relx=0.5, rely=0.15, anchor="center")
-
+			label1.pack()
 			label2 = tk.Label(slide1415, text="Invalid entry")
-			label2.config(font=(FONT, 20, STYLE))
-			label2.place(relx=0.5, rely=0.3, anchor="center")
-
+			label2.pack()
 			btn = tk.Button(slide1415, text="Back to Update Function", command=lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy()])
-			btn.config(font=(FONT, 20, STYLE))
-			btn.place(relx=0.5, rely=0.8, anchor='center')
+			btn.pack()
 
 			slide1415.mainloop()
 
@@ -245,9 +225,17 @@ def updateMembersMenu():
 	global updateMembMenu
 	global ent_memId
 
-	updateMembMenu = tk.Tk()
+	updateMembMenu = tk.Toplevel()
 	updateMembMenu.title("Update Membership")
 	updateMembMenu.geometry("1920x1080")
+
+	image = Image.open("bg1.jpg")
+	image = image.resize((1300, 650))
+
+	bg = ImageTk.PhotoImage(image)
+	canvas1 = tk.Canvas(updateMembMenu, width = 1920, height = 1080)
+	canvas1.pack(fill = "both", expand =  True)
+	canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
 
 	instructions = tk.Label(updateMembMenu, text='To Update Member, Please Enter Membership ID:', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
@@ -261,11 +249,11 @@ def updateMembersMenu():
 	ent_memId.place(relx=0.65, rely=0.5, width = 660, height = 40, anchor="center")
 
 	btn_updateMember = tk.Button(updateMembMenu, text = "Update Member", command = updateMember)
-	btn_updateMember.config(font=(FONT, 15, STYLE))
+	btn_updateMember.config(font=(FONT, FONT_SIZE, STYLE))
 	btn_updateMember.place(relx=0.3, rely=0.8, anchor="center")
 
 	btn_backMembMenu = tk.Button(updateMembMenu, text = "Back to Membership Menu", command = updateMembMenu.destroy)
-	btn_backMembMenu.config(font=(FONT, 15, STYLE))
+	btn_backMembMenu.config(font=(FONT, FONT_SIZE, STYLE))
 	btn_backMembMenu.place(relx=0.7, rely=0.8, anchor="center")
 
 	updateMembMenu.mainloop()
