@@ -20,8 +20,9 @@ def book_search():
     
     # Create Cursor
     cursor = engine.connect()
-    
-    root = tk.Tk()
+
+    # Change to a Top Level rather than a new instance
+    root = tk.Toplevel()
     root.title('Book Search Results')
     root.geometry('1225x225')
 
@@ -134,7 +135,7 @@ def mem_books():
     # Create Cursor
     cursor = engine.connect()
     
-    root = tk.Tk()
+    root = tk.Toplevel()
     root.title('Books on Loan to Member')
     root.geometry('1425x225')
 
@@ -163,20 +164,29 @@ def mem_books():
                     JOIN Borrow bo ON b.accessionNo = bo.accessionNo 
                     JOIN Author a ON bo.accessionNo = a.accessionNo 
                     WHERE borrowMemberId = '{0}')'''.format(memberId_entry.get())
-        results = cursor.execute(members).fetchall()
-        
+        books_loaned = cursor.execute(members).fetchall()
+        print(books_loaned)
+
         # Member does not have any books on loan.
-        if results[0][0] == 0:
+        if books_loaned[0][0] == 0:
             root.title("INFO")
             error_label = tk.Label(root, text = "INFO: You currently do not have any books on loan.")
             error_label.grid(row = 0, column = 0)
             # back to main page button
             btn = tk.Button(root, text="Back to Reports Menu",command=root.destroy).grid(row=1, column=0)
 
-        else: 
+        else:
+            # ACTUALLY SELECT THE BOOKS THIS TIME
+            members = '''SELECT b.accessionNo, b.title, a.author, b.isbn, b.publisher, b.publicationYear 
+                    FROM Book b 
+                    JOIN Borrow bo ON b.accessionNo = bo.accessionNo 
+                    JOIN Author a ON bo.accessionNo = a.accessionNo 
+                    WHERE borrowMemberId = "{0}" AND returnDate IS NULL'''.format(memberId_entry.get())
+            books_for_member = cursor.execute(members).fetchall()
             my_books = []
-            for n in range(len(results)):
-                my_books.append((results[n][0], results[n][1], results[n][2], results[n][3], results[n][4], results[n][5]))
+            for n in range(len(books_for_member)):
+                my_books.append((books_for_member[n][0], books_for_member[n][1], books_for_member[n][2], books_for_member[n][3],
+                                 books_for_member[n][4], books_for_member[n][5]))
 
             for book in my_books:
                 tree.insert('', tk.END, values=book)
@@ -278,7 +288,7 @@ def books_on_loan():
     # Create Cursor
     cursor = engine.connect()
     
-    root = tk.Tk()
+    root = tk.Toplevel()
     root.title('Books on Loan Report')
     root.geometry('1225x245')
 
@@ -356,7 +366,7 @@ def books_on_reservation():
                             INNER JOIN Book b on r.accessionNo = b.accessionNo'''
     result = cursor.execute(books_on_reservation).fetchall()
     
-    root = tk.Tk()
+    root = tk.Toplevel()
     root.title('Books on Reservation Report')
     root.geometry('825x225')
 
@@ -418,7 +428,9 @@ def outstanding_fines():
     outstanding_fines = '''SELECT m.memberId, m.memberName, m.faculty, m.phone, m.email 
                             FROM Fine f 
                             INNER JOIN Members m 
-                            ON f.memberId = m.memberId''' 
+                            ON f.memberId = m.memberId'''
+
+    ## TO-DO: DISPLAY FINE FOR MEMBERS WHO RETURNED AN OVERDUE BOOK
 
     result = cursor.execute(outstanding_fines).fetchall()
 
@@ -494,7 +506,7 @@ def open5():
 ## slide 46
 def reportsMenu():
 
-    root = tk.Tk() 
+    root = tk.Toplevel()
     root.title("Library System")
     root.geometry("600x410")
 
@@ -527,5 +539,4 @@ def reportsMenu():
 
     root.mainloop()
 
-reportsMenu()
 

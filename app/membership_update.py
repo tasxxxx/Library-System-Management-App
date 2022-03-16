@@ -9,7 +9,7 @@ SMALL_FONT_SIZE = 10
 STYLE = 'bold'
 
 USERNAME = "root"
-PASSWORD = "Crunchyapples99"
+PASSWORD = "Hoepeng.0099"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"

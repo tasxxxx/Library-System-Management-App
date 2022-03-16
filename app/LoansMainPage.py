@@ -5,7 +5,7 @@ import LoansReturn
 from PIL import ImageTk, Image
 
 USERNAME = "root"
-PASSWORD = "Crunchyapples99"
+PASSWORD = "Hoepeng.0099"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -23,7 +23,7 @@ def loansMenu():
 	root.title("Loans")
 	root.configure(bg = "white")
 
-	book_img = ImageTk.PhotoImage(Image.open("C:/Users/Brexton/Desktop/Y2S2/BT2102/Assignment 1/loans.jpg"))
+	book_img = ImageTk.PhotoImage(Image.open("loans.jpg"))
 	book_label = Label(image = book_img, width = 300, height = 200)
 	book_label.grid(row = 2, column = 0, rowspan = 2)
 

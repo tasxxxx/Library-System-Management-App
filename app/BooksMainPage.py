@@ -6,7 +6,7 @@ import BooksWithdrawal
 from PIL import ImageTk, Image
 
 USERNAME = "root"
-PASSWORD = "m"
+PASSWORD = "Hoepeng.0099"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -25,7 +25,7 @@ def booksMenu():
 	root.title("Books")
 	root.configure(bg = "white")
 
-	picture = Image.open("C:/Users/Brexton/Desktop/Y2S2/BT2102/Assignment 1/books.jpg")
+	picture = Image.open("books.jpg")
 	book_img = ImageTk.PhotoImage(image=picture)
 	##book_img = ImageTk.PhotoImage(Image.open("C:/Users/Brexton/Desktop/Y2S2/BT2102/Assignment 1/books.jpg"))
 	book_label = Label(image = book_img, width = 300, height = 200)

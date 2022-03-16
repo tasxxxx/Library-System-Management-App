@@ -1,7 +1,15 @@
 import sqlalchemy as db
 from tkinter import *
 
-engine = db.create_engine("mysql://root:m@localhost:3306/Library", echo = False)
+USERNAME = "root"
+PASSWORD = "Hoepeng.0099"
+HOST = "localhost"
+PORT = 3306
+DB = "Library"
+
+engine = db.create_engine('mysql://{0}:{1}@{2}:{3}/{4}'
+                          .format(USERNAME, PASSWORD, HOST, PORT, DB), echo=False)
+
 cursor = engine.connect()
 
 TITLE_FONT = ("Bahnschrift", 15)
