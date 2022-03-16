@@ -8,7 +8,7 @@ SMALL_FONT_SIZE = 10
 STYLE = 'bold'
 
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "" ## insert password
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -125,6 +125,7 @@ def deleteMembersMenu():
 	global ent_memId
 	deleteMembMenu = tk.Tk()
 	deleteMembMenu.title("Delete Membership")
+	deleteMembMenu.geometry("1920x1080")
 
 	instructions = tk.Label(deleteMembMenu, text='To Delete Member, Please Enter Membership ID:', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
 	instructions.config(font=(FONT, FONT_SIZE, STYLE))

@@ -8,7 +8,7 @@ from fine_main import *
 from ReportPage import *
 
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "" ## insert password
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -26,6 +26,7 @@ def mainMenu():
 
 	win = tk.Tk()
 	win.title("Main Menu")
+	win.geometry("1920x1080")
 
 	def navMainToMemb():
 		membersMenu()

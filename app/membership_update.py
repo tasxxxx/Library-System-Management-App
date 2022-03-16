@@ -9,7 +9,7 @@ SMALL_FONT_SIZE = 10
 STYLE = 'bold'
 
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "" ## insert password
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -85,6 +85,7 @@ def updateMember():
 	global slide12
 
 	slide12 = tk.Tk()
+	slide12.geometry("1920x1080")
 
 	memId = ent_memId.get()
 
@@ -209,10 +210,8 @@ def updateMembersMenu():
 
 	updateMembMenu = tk.Tk()
 	updateMembMenu.title("Update Membership")
+	updateMembMenu.geometry("1920x1080")
 
-	def navToMembMenu():
-		membersMenu()
-		deleteMembMenu.destroy()
 
 	instructions = tk.Label(updateMembMenu, text='To Update Member, Please Enter Membership ID:', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
 	instructions.config(font=(FONT, FONT_SIZE, STYLE))

@@ -9,7 +9,7 @@ SMALL_FONT_SIZE = 10
 STYLE = 'bold'
 
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "" ## insert password
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -21,6 +21,7 @@ cursor = engine.connect()
 def createMember():
 
 	win = tk.Tk()
+	win.geometry("1920x1080")
 
 	global ent_memId
 	global ent_name
@@ -90,7 +91,7 @@ def createMembersMenu():
 
 	createMembMenu = tk.Tk()
 	createMembMenu.title("Create Membership")
-
+	createMembMenu.geometry("1920x1080")
 
 	def navToMain():
 		mainMenu()

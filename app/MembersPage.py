@@ -15,7 +15,7 @@ def membersMenu():
 	membMenu = tk.Tk()
 	#membMenu = tk.Toplevel()
 	membMenu.title("Membership")
-
+	membMenu.geometry("1920x1080")
 
 	instructions = tk.Label(membMenu, text='Select one of the Options below:', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
 	instructions.config(font=(FONT, FONT_SIZE, STYLE))
