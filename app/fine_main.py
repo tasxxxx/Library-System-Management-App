@@ -13,6 +13,14 @@ def fine_main_menu():
     win.title("Fine")
     win.geometry("1920x1080")
 
+    image = Image.open("bg1.jpg")
+    image = image.resize((1300, 650))
+
+    bg = ImageTk.PhotoImage(image)
+    canvas1 = Canvas(win, width = 1920, height = 1080)
+    canvas1.pack(fill = "both", expand =  True)
+    canvas1.create_image(0, 0, image = bg, anchor = "nw")
+
     # title_frame = LabelFrame(win, padx = 5, pady = 5)
     # title_frame.grid(row = 0, column = 0, columnspan = 1, padx = 10, pady = 10)
     # title_label = Label(title_frame, text = "Select one of the options below").pack()

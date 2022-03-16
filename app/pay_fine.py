@@ -2,6 +2,7 @@ import sqlalchemy as db
 from tkinter import *
 from datetime import *
 from sqlalchemy.exc import IntegrityError, DataError, OperationalError
+from PIL import ImageTk, Image
 
 FONT = 'Arial'
 FONT_SIZE = 25
@@ -178,9 +179,17 @@ def confirmation_window():
 
 #slide 42
 def fine_details():
-    win = Tk()
+    win = Toplevel()
     win.title("Pay a Fine")
     win.geometry("1920x1080")
+
+    image = Image.open("bg1.jpg")
+    image = image.resize((1300, 650))
+
+    bg = ImageTk.PhotoImage(image)
+    canvas1 = Canvas(win, width = 1920, height = 1080)
+    canvas1.pack(fill = "both", expand =  True)
+    canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
     #creating the fields + labels for slide 34
     global membership_id_field
@@ -216,6 +225,5 @@ def fine_details():
     back_button = Button(win, text='Back to Fines Menu', padx=10, pady=10, command=win.destroy, bg='#27c0ab', borderwidth=5, relief='raised')
     back_button.config(font=(FONT,15,STYLE), wraplength=300)
     back_button.place(relx=0.65, rely=0.8, anchor='center')
-
 
     win.mainloop()
