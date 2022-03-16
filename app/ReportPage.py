@@ -13,7 +13,7 @@ STYLE = 'bold'
 
 # Create a database or connect to one
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "Crunchyapples99"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -604,14 +604,14 @@ def reportsMenu():
     img_canvas.place(relx=0.2, rely=0.50, anchor="w")
     img_canvas.create_image(50, 50, anchor="w", image=my_img)
 
-    # BG IMAGE
-    image = Image.open("bg1.jpg")
-    image = image.resize((1300, 650))
+    # # BG IMAGE
+    # image = Image.open("bg1.jpg")
+    # image = image.resize((1920, 1080))
 
-    bg = ImageTk.PhotoImage(image)
-    canvas1 = tk.Canvas(root, width = 1920, height = 1080)
-    canvas1.pack(fill = "both", expand =  True)
-    canvas1.create_image(0, 0, image = bg, anchor = "nw")
+    # bg = ImageTk.PhotoImage(image)
+    # canvas1 = tk.Canvas(root, width = 1920, height = 1080)
+    # canvas1.pack(fill = "both", expand =  True)
+    # canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
     # Create buttons to initiate window opening for the various options
     booksearch_button = tk.Button(root, text="Book Search", command=open1)

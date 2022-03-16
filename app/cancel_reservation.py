@@ -8,7 +8,7 @@ SMALL_FONT_SIZE = 10
 STYLE = 'bold'
 
 USERNAME = "root"
-PASSWORD = "" ## enter password
+PASSWORD = "Crunchyapples99"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -121,48 +121,48 @@ def confirmation_window():
         member_name = member_name[0][1]
         book_title = book_title[0][1]
         
-        confirmation_label = Label(win, text = "Confirm Cancel Reservation Details To Be Correct")
+        confirmation_label = Label(win, text = "Confirm Cancel Reservation Details To Be Correct", bg = "#b0f556", wraplength=700)
         confirmation_label.config(font=(FONT, FONT_SIZE, STYLE))
-        confirmation_label.place(relx=0.2, rely=0.2, anchor="center")
+        confirmation_label.place(relx=0.5, rely=0.1, anchor="center")
         
-        accession_no_label = Label(win, text = "Accession Number: '{}'".format(accession_no))
-        accession_no_label.config(font=(FONT, FONT_SIZE, STYLE))
-        accession_no_label.place(relx=0.2, rely=0.3, anchor="center")
+        accession_no_label = Label(win, text = "Accession Number: '{}'".format(accession_no), bg = "#b0f556")
+        accession_no_label.config(font=(FONT, 15, STYLE))
+        accession_no_label.place(relx=0.5, rely=0.25, anchor="center")
         
-        book_title_label = Label(win, text = "Book Title: '{}'".format(book_title))
-        book_title_label.config(font=(FONT, FONT_SIZE, STYLE))
-        book_title_label.place(relx=0.2, rely=0.4, anchor="center")
+        book_title_label = Label(win, text = "Book Title: '{}'".format(book_title), bg = "#b0f556")
+        book_title_label.config(font=(FONT, 15, STYLE))
+        book_title_label.place(relx=0.5, rely=0.35, anchor="center")
 
-        member_id_label = Label(win, text = "Membership ID: '{}'".format(member_id))
-        member_id_label.config(font=(FONT, FONT_SIZE, STYLE))
-        member_id_label.place(relx=0.2, rely=0.5, anchor="center")
+        member_id_label = Label(win, text = "Membership ID: '{}'".format(member_id), bg = "#b0f556")
+        member_id_label.config(font=(FONT, 15, STYLE))
+        member_id_label.place(relx=0.5, rely=0.45, anchor="center")
         
-        member_name_label = Label(win, text = "Member Name: '{}'".format(member_name))
-        member_name_label.config(font=(FONT, FONT_SIZE, STYLE))
-        member_name_label.place(relx=0.2, rely=0.6, anchor="center")
+        member_name_label = Label(win, text = "Member Name: '{}'".format(member_name), bg = "#b0f556")
+        member_name_label.config(font=(FONT, 15, STYLE))
+        member_name_label.place(relx=0.5, rely=0.55, anchor="center")
         
-        cancel_date_label = Label(win, text = "Cancellation Date: '{}'".format(cancel_date))
-        cancel_date_label.config(font=(FONT, FONT_SIZE, STYLE))
-        cancel_date_label.place(relx=0.2, rely=0.7, anchor="center")
+        cancel_date_label = Label(win, text = "Cancellation Date: '{}'".format(cancel_date), bg = "#b0f556")
+        cancel_date_label.config(font=(FONT, 15, STYLE))
+        cancel_date_label.place(relx=0.5, rely=0.65, anchor="center")
 
         confirm_button = Button(win, text = "Confirm Cancellation", command = lambda: [cancel_reservation_record(), win.destroy()])
-        confirm_button.config(font=(FONT, FONT_SIZE, STYLE))
-        confirm_button.place(relx=0.3, rely=0.8, anchor="center")
+        confirm_button.config(font=(FONT, 15, STYLE))
+        confirm_button.place(relx=0.3, rely=0.85, anchor="center")
 
         back_button = Button(win, text = "Back to Cancellation Function", command = win.destroy)
-        back_button.config(font=(FONT, FONT_SIZE, STYLE))
-        back_button.place(relx=0.7, rely=0.8, anchor="center")
+        back_button.config(font=(FONT, 15, STYLE))
+        back_button.place(relx=0.7, rely=0.85, anchor="center")
 
         win.mainloop()
 
 def cancel_reservation_details():
     win = Toplevel()
-    win.geometry("1980x1080")
+    win.geometry("1920x1080")
 
     win.title("Cancel a Reservation")
 
     image = Image.open("bg1.jpg")
-    image = image.resize((1300, 650))
+    image = image.resize((1920, 1080))
 
     bg = ImageTk.PhotoImage(image)
     canvas1 = Canvas(win, width = 1920, height = 1080)
@@ -174,27 +174,33 @@ def cancel_reservation_details():
     global accession_no_field
     global membership_id_field
     global cancel_date_field
+
+    # TOP HEADER
+    header = Label(win, text='To Cancel a Reservation, Please Enter Information Below:',
+                      fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
+    header.config(font=(FONT, FONT_SIZE, STYLE))
+    header.place(relx=0.5, rely=0.09, anchor="center")
     
     accession_no_field = Entry(win, width=60)
-    accession_no_field.place(relx=0.6, rely=0.20, width=600, height=40, anchor="center")
+    accession_no_field.place(relx=0.6, rely=0.35, width=600, height=40, anchor="center")
 
-    accession_no_label = Label(win, text = "Accession Number")
+    accession_no_label = Label(win, text = "Accession Number", bg = "#FFE45E")
     accession_no_label.config(font=(FONT, FONT_SIZE, STYLE))
-    accession_no_label.place(relx=0.25, rely=0.20, anchor="center")
+    accession_no_label.place(relx=0.25, rely=0.35, anchor="center")
 
     membership_id_field = Entry(win, width=60)
-    membership_id_field.place(relx=0.6, rely=0.30, width=600, height=40, anchor="center")
+    membership_id_field.place(relx=0.6, rely=0.45, width=600, height=40, anchor="center")
 
-    membership_id_label = Label(win, text = "Membership ID")
+    membership_id_label = Label(win, text = "Membership ID", bg = "#FFE45E")
     membership_id_label.config(font=(FONT, FONT_SIZE, STYLE))
-    membership_id_label.place(relx=0.25, rely=0.30, anchor="center")
+    membership_id_label.place(relx=0.25, rely=0.45, anchor="center")
 
     cancel_date_field = Entry(win, width=60)
-    cancel_date_field.place(relx=0.6, rely=0.40, width=600, height=40, anchor="center")
+    cancel_date_field.place(relx=0.6, rely=0.55, width=600, height=40, anchor="center")
 
-    cancel_date_label = Label(win, text = "Cancellation Date")
+    cancel_date_label = Label(win, text = "Cancellation Date", bg = "#FFE45E")
     cancel_date_label.config(font=(FONT, FONT_SIZE, STYLE))
-    cancel_date_label.place(relx=0.25, rely=0.40, anchor="center")
+    cancel_date_label.place(relx=0.25, rely=0.55, anchor="center")
 
     cancel_button = Button(win, text = "Cancel Reservation", command = confirmation_window)
     cancel_button.config(font=(FONT, FONT_SIZE, STYLE))

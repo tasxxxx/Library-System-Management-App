@@ -37,11 +37,11 @@ def reservation_main_menu():
     #creating the buttons
     reserve_button = Button(win, text = "Book Reservation", command = reservation_details)
     reserve_button.config(font=(FONT, FONT_SIZE, STYLE))
-    reserve_button.place(relx=0.6, rely=0.3, anchor="center")
+    reserve_button.place(relx=0.6, rely=0.4, anchor="center")
 
     cancel_button = Button(win, text = "Cancel Reservation", command = cancel_reservation_details)
     cancel_button.config(font=(FONT, FONT_SIZE, STYLE))
-    cancel_button.place(relx=0.6, rely=0.45, anchor="center")
+    cancel_button.place(relx=0.6, rely=0.55, anchor="center")
 
     back_button = Button(win, text = "Back to Main Menu", command = win.destroy)
     back_button.config(font=(FONT, FONT_SIZE, STYLE))
