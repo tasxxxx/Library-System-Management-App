@@ -29,8 +29,9 @@ def complete_payment():
             cursor.execute(insert_payment)
 
             #delete fine record
-            delete_fine = "DELETE FROM Fine WHERE memberId = '{}'".format(member_id)
-            cursor.execute(delete_fine)
+            # update as of 16/3 5.31pm: edited for fine record to be updated to 0 instead of deleted
+            zeroed_fine = "UPDATE Fine SET fineAmount = 0 WHERE memberId = '{}'".format(member_id)
+            cursor.execute(zeroed_fine)
             
             win.title("FINE PAID SUCCESSFULLY")
             success_label = Label(win, text = "Fine successfully paid")
