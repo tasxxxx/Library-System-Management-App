@@ -38,9 +38,15 @@ def add_reservation_record():
     if not on_loan and not on_reserve:
         #check if member has any outstanding fines
         check_fine = "SELECT * FROM Fine WHERE memberId = '{}'".format(member_id)
-        got_fine = cursor.execute(check_fine).fetchall()
+        fine_records = cursor.execute(check_fine).fetchall()
+        no_fine = True
+        if fine_records:
+            for record in fine_records:
+                fine_amount = record[1]
+                if fine_amount != 0:
+                    no_fine = False
 
-        if not got_fine:
+        if no_fine:
             #check only 0 or 1 book reserved
             check_reservations = "SELECT * FROM Reservation WHERE reservationMemberId = '{}'".format(member_id)
             reservations_made = len(cursor.execute(check_reservations).fetchall())
