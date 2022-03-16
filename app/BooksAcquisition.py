@@ -2,22 +2,26 @@ import sqlalchemy as db
 from tkinter import *
 
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "mysqlUbae!!1"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
+
+FONT = 'Arial'
+FONT_SIZE = 25
+SMALL_FONT_SIZE = 10
+STYLE = 'bold'
 
 engine = db.create_engine('mysql://{0}:{1}@{2}:{3}/{4}'
                           .format(USERNAME, PASSWORD, HOST, PORT, DB), echo=False)
 
 cursor = engine.connect()
 
-TITLE_FONT = ("Bahnschrift", 15)
-DEFAULT_FONT = ("Bahnschrift", 11)
-
 def booksAcquisition():
     
     root = Tk()
+    root.title("Book Acquisition")
+    root.geometry("1920x1080")
     root.configure(bg = "white")
 
     global accessionNo_field
@@ -27,39 +31,48 @@ def booksAcquisition():
     global publisher_field
     global publicationYear_field
 
-    toplabel = Label(root, text = "For New Book Acquisition, Please Enter Required Information Below:", font = TITLE_FONT, bg = "#5AA9E6")
-    toplabel.grid(row = 1, column = 2, columnspan = 2)
+    toplabel = Label(root, text = "For New Book Acquisition, Please Enter Required Information Below:", fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
+    toplabel.config(font=(FONT, FONT_SIZE, STYLE))
+    toplabel.place(relx=0.5, rely=0.09, anchor="center")
 
-    label1 = Label(root, text = "Accession Number", font = DEFAULT_FONT, bg = "#FFE45E")
-    label1.grid(row = 2, column = 2)
-    label2 = Label(root, text = "Title", font = DEFAULT_FONT, bg = "#FFE45E")
-    label2.grid(row = 3, column = 2)
-    label3 = Label(root, text = "Authors", font = DEFAULT_FONT, bg = "#FFE45E")
-    label3.grid(row = 4, column = 2)
-    label4 = Label(root, text = "ISBN", font = DEFAULT_FONT, bg = "#FFE45E")
-    label4.grid(row = 5, column = 2)
-    label5 = Label(root, text = "Publisher", font = DEFAULT_FONT, bg = "#FFE45E")
-    label5.grid(row = 6, column = 2)
-    label6 = Label(root, text = "Publication Year", font = DEFAULT_FONT, bg = "#FFE45E")
-    label6.grid(row = 7, column = 2)
+    label1 = Label(root, text = "Accession Number", bg = "#FFE45E")
+    label1.config(font=(FONT, FONT_SIZE, STYLE))
+    label1.place(relx=0.2, rely=0.2, anchor="center")
+    label2 = Label(root, text = "Title", bg = "#FFE45E")
+    label2.config(font=(FONT, FONT_SIZE, STYLE))
+    label2.place(relx=0.2, rely=0.3, anchor="center")
+    label3 = Label(root, text = "Authors", bg = "#FFE45E")
+    label3.config(font=(FONT, FONT_SIZE, STYLE))
+    label3.place(relx=0.2, rely=0.4, anchor="center")
+    label4 = Label(root, text = "ISBN", bg = "#FFE45E")
+    label4.config(font=(FONT, FONT_SIZE, STYLE))
+    label4.place(relx=0.2, rely=0.5, anchor="center")
+    label5 = Label(root, text = "Publisher", bg = "#FFE45E")
+    label5.config(font=(FONT, FONT_SIZE, STYLE))
+    label5.place(relx=0.2, rely=0.6, anchor="center")
+    label6 = Label(root, text = "Publication Year", bg = "#FFE45E")
+    label6.config(font=(FONT, FONT_SIZE, STYLE))
+    label6.place(relx=0.2, rely=0.7, anchor="center")
 
     accessionNo_field = Entry(root, width = 30)
-    accessionNo_field.grid(row = 2, column = 3, sticky = W)
+    accessionNo_field.place(relx=0.65, rely=0.2, width = 660, height = 40, anchor="center")
     title_field = Entry(root, width = 30)
-    title_field.grid(row = 3, column = 3, sticky = W)
+    title_field.place(relx=0.65, rely=0.3, width = 660, height = 40, anchor="center")
     authors_field = Entry(root, width = 30)
-    authors_field.grid(row = 4, column = 3, sticky = W)
+    authors_field.place(relx=0.65, rely=0.4, width = 660, height = 40, anchor="center")
     isbn_field = Entry(root, width = 30)
-    isbn_field.grid(row = 5, column = 3, sticky = W)
+    isbn_field.place(relx=0.65, rely=0.5, width = 660, height = 40, anchor="center")
     publisher_field = Entry(root, width = 30)
-    publisher_field.grid(row = 6, column = 3, sticky = W)
+    publisher_field.place(relx=0.65, rely=0.6, width = 660, height = 40, anchor="center")
     publicationYear_field = Entry(root, width = 30)
-    publicationYear_field.grid(row = 7, column = 3, sticky = W)
+    publicationYear_field.place(relx=0.65, rely=0.7, width = 660, height = 40, anchor="center")
 
-    button1 = Button(root, text = "Add New Book", font = DEFAULT_FONT, bg = "#5AA9E6", command = popup_window)
-    button1.grid(row = 8, column = 2)
-    button2 = Button(root, text = "Back to Books Menu", font = DEFAULT_FONT, bg = "#5AA9E6", command = root.destroy)
-    button2.grid(row = 8, column = 3)
+    button1 = Button(root, text = "Add New Book", bg = "#5AA9E6", command = popup_window)
+    button1.config(font=(FONT, FONT_SIZE, STYLE))
+    button1.place(relx=0.3, rely=0.9, anchor="center")
+    button2 = Button(root, text = "Back to Books Menu", bg = "#5AA9E6", command = root.destroy)
+    button2.config(font=(FONT, FONT_SIZE, STYLE))
+    button2.place(relx=0.6, rely=0.9, anchor="center")
 
     root.mainloop()
 
@@ -89,12 +102,17 @@ def popup_window():
     inputArr = [accessionNo, title, authors, isbn, publisher, publicationYear]
     
     if (len(book_added) > 0) or ("" in inputArr):
-        label1 = Label(win, text = "Error!", font = TITLE_FONT)
-        label1.pack()
-        label2 = Label(win, text = "Book already added; Duplicate, Missing or Incomplete fields.", font = DEFAULT_FONT)
-        label2.pack() 
-        btn = Button(win, text = "Back to Acquisition Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
-        btn.pack()
+        win.geometry("800x400")
+        win.configure(bg = "#eb1e1e")
+        label1 = Label(win, text = "Error!", bg = "#eb1e1e")
+        label1.place(relx=0.5, rely=0.1, anchor="center")
+        label1.config(font=(FONT, FONT_SIZE, STYLE))
+        label2 = Label(win, text = "Book already added; Duplicate, Missing or Incomplete fields.", bg = "#eb1e1e", wraplength = 700)
+        label2.place(relx=0.5, rely=0.5, anchor="center")
+        label2.config(font=(FONT, FONT_SIZE, STYLE))
+        btn = Button(win, text = "Back to Acquisition Function", bg = "#5AA9E6", command = win.destroy)
+        btn.place(relx=0.5, rely=0.9, anchor="center")
+        btn.config(font=(FONT, FONT_SIZE, STYLE))
     else:
         # INSERT DATA INTO BOOK TABLE 
         add_book = "INSERT INTO Book (accessionNo, title, isbn, publisher, publicationYear) VALUES ('{}', '{}', '{}', '{}', '{}')".format(accessionNo, title, isbn, publisher, publicationYear)
@@ -106,11 +124,16 @@ def popup_window():
             add_author = "INSERT INTO Author (accessionNo, author) VALUES ('{}', '{}')".format(accessionNo, author)
             cursor.execute(add_author)
 
-        label1 = Label(win, text = "Success!", font = TITLE_FONT)
-        label1.pack()
-        label2 = Label(win, text = "New Book added in Library.", font = DEFAULT_FONT)
-        label2.pack() 
-        btn = Button(win, text = "Back to Acquisition Function", font = DEFAULT_FONT, bg = "#5AA9E6", command = win.destroy)
-        btn.pack()
+        win.geometry("800x400")
+        win.configure(bg = "#b0f556")
+        label1 = Label(win, text = "Success!", bg = "#b0f556")
+        label1.place(relx=0.5, rely=0.1, anchor="center")
+        label1.config(font=(FONT, FONT_SIZE, STYLE))
+        label2 = Label(win, text = "New Book added in Library.", bg = "#b0f556", wraplength = 700)
+        label2.place(relx=0.5, rely=0.5, anchor="center")
+        label2.config(font=(FONT, FONT_SIZE, STYLE))
+        btn = Button(win, text = "Back to Acquisition Function", bg = "#5AA9E6", command = win.destroy)
+        btn.place(relx=0.5, rely=0.9, anchor="center")
+        btn.config(font=(FONT, FONT_SIZE, STYLE))
     
     win.mainloop()

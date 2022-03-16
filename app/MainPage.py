@@ -8,7 +8,7 @@ from fine_main import *
 from ReportPage import *
 
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "mysqlUbae!!1"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -26,6 +26,11 @@ def mainMenu():
 
 	win = tk.Tk()
 	win.title("Main Menu")
+	win.geometry("1920x1080")
+	bg = ImageTk.PhotoImage(Image.open("C:/Users/user/Documents/GitHub/bt2102-assignment-1/resources/archi.jpg"))
+	canvas1 = Canvas(win, width = 1920, height = 1080)
+	canvas1.pack(fill = "both", expand =  True)
+	canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
 	def navMainToMemb():
 		membersMenu()
