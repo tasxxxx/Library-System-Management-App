@@ -1,6 +1,7 @@
 import sqlalchemy as db
 import tkinter as tk
 from datetime import *
+from sqlalchemy.exc import IntegrityError, DataError, OperationalError
 
 FONT = 'Arial'
 FONT_SIZE = 25
@@ -44,6 +45,9 @@ def update():
 	newemail = ent_email.get()
 
 	slide13 = tk.Tk()
+
+	## check if fields are empty? sequence of the checking, alr check below
+
 
 	info = "Member ID: {}\nName: {}\nFaculty: {}\nPhone Number: {}\nEmail Address: {}".format(memId, newname, newfaculty, newphoneno, newemail)
 
@@ -91,6 +95,9 @@ def updateMember():
 	if len(memberInfo) == 0:
 		label1 = tk.Label(slide12, text='Error: No such member found', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
 		label1.pack()
+
+		btn_back = tk.Button(slide12, text = "Back", command = slide12.destroy)
+		btn_back.pack()
 		slide12.mainloop()
 
 	## slide 12
@@ -160,27 +167,38 @@ def confirmUpdate(memberId, name, faculty, phoneNo, email):
 		label1.pack()
 		label2 = tk.Label(slide1415, text="Missing or Incomplete fields.")
 		label2.pack()
-		btn = tk.Button(slide1415, text="Back to Update Function", command=slide1415.destroy)
+		btn = tk.Button(slide1415, text="Back to Update Function", command= lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy()])
 		btn.pack()
 
 	## slide 14
 	else:
 
-		update_member = """UPDATE Members SET memberName='{}', faculty='{}', phone={}, email='{}' WHERE memberId='{}';""".format(name,\
-		faculty, phoneNo, email, memberId)
-		cursor.execute(update_member)
+		try:
+			update_member = """UPDATE Members SET memberName='{}', faculty='{}', phone={}, email='{}' WHERE memberId='{}';""".format(name,\
+			faculty, phoneNo, email, memberId)
+			cursor.execute(update_member)
 
-		label1 = tk.Label(slide1415, text="Success!")
-		label1.pack()
-		label2 = tk.Label(slide1415, text="ALS Membership Updated.")
-		label2.pack()
-		btn1 = tk.Button(slide1415, text="Create Another Member", command=lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy()])
-		btn1.pack()					
-		btn2 = tk.Button(slide1415, text="Back to Update Function", command=lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy()])
-		btn2.pack()
+			label1 = tk.Label(slide1415, text="Success!")
+			label1.pack()
+			label2 = tk.Label(slide1415, text="ALS Membership Updated.")
+			label2.pack()
+			btn1 = tk.Button(slide1415, text="Create Another Member", command=lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy(), updateMembMenu.destroy()])
+			btn1.pack()					
+			btn2 = tk.Button(slide1415, text="Back to Update Function", command=lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy()])
+			btn2.pack()
 
-	slide1415.mainloop()
+			slide1415.mainloop()
 
+
+		except (IntegrityError, ValueError, OperationalError):
+			label1 = tk.Label(slide1415, text="Error!", bg="#cc0505", fg= "#ffff00")
+			label1.pack()
+			label2 = tk.Label(slide1415, text="Invalid entry")
+			label2.pack()
+			btn = tk.Button(slide1415, text="Back to Update Function", command=lambda: [slide1415.destroy(), slide13.destroy(), slide12.destroy()])
+			btn.pack()
+
+			slide1415.mainloop()
 
 
 ### slide 11

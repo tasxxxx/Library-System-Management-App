@@ -54,19 +54,29 @@ def createMember():
 
 	## slide 6
 	else:
-		insert_member = "INSERT INTO Members VALUES ('{}', '{}', '{}', '{}', '{}')".format(memId, name, faculty, phoneNo, email)
-		cursor.execute(insert_member)
 
-		label1 = tk.Label(win, text="Success!")
-		label1.pack()
-		label2 = tk.Label(win, text="ALS Membership created.")
-		label2.pack()
-		btn = tk.Button(win, text="Back to Create Function", command=win.destroy)
-		btn.pack()
+		try:
+			insert_member = "INSERT INTO Members VALUES ('{}', '{}', '{}', '{}', '{}')".format(memId, name, faculty, phoneNo, email)
+			cursor.execute(insert_member)
 
-		win.mainloop()
+			label1 = tk.Label(win, text="Success!")
+			label1.pack()
+			label2 = tk.Label(win, text="ALS Membership created.")
+			label2.pack()
+			btn = tk.Button(win, text="Back to Create Function", command=win.destroy)
+			btn.pack()
 
+			win.mainloop()
 
+		except (IntegrityError, ValueError, OperationalError):
+			label1 = tk.Label(win, text="Error!", bg="#cc0505", fg= "#ffff00")
+			label1.pack()
+			label2 = tk.Label(win, text="Invalid entry")
+			label2.pack()
+			btn = tk.Button(win, text="Back to Create Function", command=win.destroy)
+			btn.pack()
+
+			win.mainloop()
 
 ## slide 5
 def createMembersMenu():

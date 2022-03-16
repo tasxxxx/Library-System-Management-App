@@ -17,6 +17,19 @@ engine = db.create_engine('mysql://{0}:{1}@{2}:{3}/{4}'.format(USERNAME, PASSWOR
 cursor = engine.connect()
 
 
+def delete(idinput):
+	delete_member = "DELETE FROM Members WHERE memberId = '{}'".format(idinput)
+	cursor.execute(delete_member)
+
+	deletepopup = tk.Tk()
+	label1 = tk.Label(deletepopup, text='Membership deleted', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
+	label1.pack()
+
+	btn_back = tk.Button(deletepopup, text = "Back", command = lambda: [deletepopup.destroy(), win.destroy()])
+	btn_back.pack()
+	
+	deletepopup.mainloop()
+
 
 ## slide 9
 # confirmation popup and error 
@@ -28,13 +41,22 @@ def deleteMember():
 	sql2 = "SELECT * FROM Members WHERE memberId = '{}'".format(memId)
 	memberInfo = cursor.execute(sql2).fetchall()
 
+	win = tk.Tk()
+
+	if len(memberInfo) == 0:
+		label1 = tk.Label(win, text='Error: No such member found', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
+		label1.pack()
+
+		btn_back = tk.Button(win, text = "Back", command = win.destroy)
+		btn_back.pack()
+		win.mainloop()
+
+
 	# query from Members
 	name = memberInfo[0][1]
 	faculty = memberInfo[0][2]
 	phoneNo = memberInfo[0][3]
 	email = memberInfo[0][4]
-
-	win = tk.Tk()
 
 	# TODO: check BORROW WHERE memberId, all books are already returned: returnDate != null
 	sqlcheck_on_loan = "SELECT * FROM Borrow WHERE borrowMemberId = '{}'".format(memId)
@@ -42,7 +64,7 @@ def deleteMember():
 	on_loan = False
 	for record in loan_records:
 		return_date = record[3]
-		if return_date == None or return_date == null:
+		if return_date is None:
 			on_loan = True
 
 	# DONE check FINES WHERE memberId, all fines are already paid: no records should exist
@@ -71,10 +93,6 @@ def deleteMember():
 
 	# success, deletion SQL, reservations cascade in SQL
 	else:
-		def delete(idinput):
-			delete_member = "DELETE FROM Members WHERE memberId = '{}'".format(idinput)
-			cursor.execute(delete_member)
-			win.destroy()
 
 		memberInfo = "Member ID: {}\nName: {}\nFaculty: {}\nPhone Number: {}\nEmail Address: {}".format(memId, name, faculty, phoneNo, email)
 
@@ -108,12 +126,6 @@ def deleteMembersMenu():
 	deleteMembMenu = tk.Tk()
 	deleteMembMenu.title("Delete Membership")
 
-	
-	def navToMembMenu():
-		membersMenu()
-		deleteMembMenu.destroy()
-
-
 	instructions = tk.Label(deleteMembMenu, text='To Delete Member, Please Enter Membership ID:', fg='black', bg='#c5e3e5', relief='raised', width=60, height=3)
 	instructions.config(font=(FONT, FONT_SIZE, STYLE))
 	instructions.place(relx=0.5, rely=0.09, anchor="center")
@@ -129,7 +141,6 @@ def deleteMembersMenu():
 	btn_deleteMember.place(relx=0.3, rely=0.8, anchor="center")
 
 	btn_backMembMenu = tk.Button(deleteMembMenu, text = "Back to Membership Menu", command = deleteMembMenu.destroy)
-	#btn_backMembMenu = tk.Button(deleteMembMenu, text = "Back to Membership Menu", command = navToMembMenu)
 	btn_backMembMenu.config(font=(FONT, FONT_SIZE, STYLE))
 	btn_backMembMenu.place(relx=0.7, rely=0.8, anchor="center")
 
