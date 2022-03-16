@@ -1,6 +1,10 @@
+from turtle import back
+from black import err
+from click import confirm
 import sqlalchemy as db
 from tkinter import *
 from datetime import *
+from PIL import ImageTk, Image
 
 FONT = 'Arial'
 FONT_SIZE = 25
@@ -55,32 +59,48 @@ def add_reservation_record():
                 #add reservation
                 insert_reservation = "INSERT INTO Reservation VALUES ('{}', '{}', '{}')".format(accession_no, reserve_date, member_id)
                 cursor.execute(insert_reservation)
+                win.geometry("800x400")
+                win.configure(bg = "#b0f556")
                 win.title("BOOK SUCCESSFULLY RESERVED")
-                success_label = Label(win, text = "Reservation successfully made")
-                success_label.grid(row = 0, column = 0)
+                success_label = Label(win, text = "Reservation successfully made", bg = "#b0f556")
+                success_label.place(relx=0.5, rely=0.1, anchor="center")
+                success_label.config(font=(FONT, FONT_SIZE, STYLE))
                 ok_button = Button(win, text = "Ok", command = win.destroy)
-                ok_button.grid(row = 1, column = 0)
+                ok_button.place(relx=0.5, rely=0.9, anchor="center")
+                ok_button.config(font=(FONT, FONT_SIZE, STYLE))
 
             else:
+                win.geometry("800x400")
+                win.configure(bg = "#eb1e1e")
                 win.title("ERROR")
-                error_label = Label(win, text = "ERROR: Member currently has 2 books on reservation")
-                error_label.grid(row = 0, column = 0)
+                error_label = Label(win, text = "ERROR: Member currently has 2 books on reservation", bg = "#eb1e1e")
+                error_label.place(relx=0.5, rely=0.1, anchor="center")
+                error_label.config(font=(FONT, FONT_SIZE, STYLE))
                 back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
-                back_button.grid(row = 1, column = 0)
+                back_button.place(relx=0.5, rely=0.9, anchor="center")
+                back_button.config(font=(FONT, FONT_SIZE, STYLE))
 
         else:
+            win.geometry("800x400")
+            win.configure(bg = "#eb1e1e")
             win.title("ERROR")
             fine_amount = fine_records[0][1]
-            error_label = Label(win, text = "ERROR: Member has an outstanding fine of ${}".format(fine_amount))
-            error_label.grid(row = 0, column = 0)
+            error_label = Label(win, text = "ERROR: Member has an outstanding fine of ${}".format(fine_amount), bg = "#eb1e1e")
+            error_label.place(relx=0.5, rely=0.1, anchor="center")
+            error_label.config(font=(FONT, FONT_SIZE, STYLE))
             back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
-            back_button.grid(row = 1, column = 0)
+            back_button.place(relx=0.5, rely=0.9, anchor="center")
+            back_button.config(font=(FONT, FONT_SIZE, STYLE))
     else:
+        win.geometry("800x400")
+        win.configure(bg = "#eb1e1e")
         win.title("ERROR")
-        error_label = Label(win, text = "ERROR: Book is either on loan or already reserved")
-        error_label.grid(row = 0, column = 0)
+        error_label = Label(win, text = "ERROR: Book is either on loan or already reserved", bg = "#eb1e1e", wraplength = 700)
+        error_label.place(relx=0.5, rely=0.1, anchor="center")
+        error_label.config(font=(FONT, FONT_SIZE, STYLE))
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
-        back_button.grid(row = 1, column = 0)
+        back_button.place(relx=0.5, rely=0.9, anchor="center")
+        back_button.config(font=(FONT, FONT_SIZE, STYLE))
 
 #slide 35
 def confirmation_window():
@@ -103,56 +123,74 @@ def confirmation_window():
 
     #invalid member id or invalid accession_no
     if not member_name or not book_title:
+        win.geometry("800x400")
+        win.configure(bg = "#eb1e1e")
         win.title("ERROR")
         
-        error_label = Label(win, text = "ERROR: No such member and/or book exists")
-        error_label.grid(row = 0, column = 0)
+        error_label = Label(win, text = "ERROR: No such member and/or book exists", bg = "#eb1e1e")
+        error_label.place(relx=0.5, rely=0.1, anchor="center")
+        error_label.config(font=(FONT, FONT_SIZE, STYLE))
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
-        back_button.grid(row = 1, column = 0)
+        back_button.place(relx=0.5, rely=0.9, anchor="center")
+        back_button.config(font=(FONT, FONT_SIZE, STYLE))
 
         win.mainloop()
 
     #no reserve date entered
     if not reserve_date:
+        win.geometry("800x400")
+        win.configure(bg = "#eb1e1e")
         win.title("ERROR")
         
-        error_label = Label(win, text = "ERROR: Reserve date not entered")
-        error_label.grid(row = 0, column = 0)
+        error_label = Label(win, text = "ERROR: Reserve date not entered", bg = "#eb1e1e")
+        error_label.place(relx=0.5, rely=0.1, anchor="center")
+        error_label.config(font=(FONT, FONT_SIZE, STYLE))
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
-        back_button.grid(row = 1, column = 0)
+        back_button.place(relx=0.5, rely=0.9, anchor="center")
+        back_button.config(font=(FONT, FONT_SIZE, STYLE))
 
         win.mainloop()
 
     #slide 35
     else:
         win.title("Confirmation of Reservation")
+        win.geometry("400x800")
+        win.configure(bg = "#b0f556")
         
         member_name = member_name[0][1]
         book_title = book_title[0][1]
         
-        confirmation_label = Label(win, text = "Confirm Reservation Details To Be Correct")
-        confirmation_label.grid(row = 0, column = 0)
+        confirmation_label = Label(win, text = "Confirm Reservation Details To Be Correct", bg = "#b0f556")
+        confirmation_label.config(font=(FONT, FONT_SIZE, STYLE))
+        confirmation_label.place(relx=0.5, rely=0.09, anchor="center")
         
         accession_no_label = Label(win, text = "Accession Number: '{}'".format(accession_no))
-        accession_no_label.grid(row = 1, column = 0)
+        accession_no_label.config(font=(FONT, FONT_SIZE, STYLE))
+        accession_no_label.place(relx=0.2, rely=0.2, anchor="w")
         
         book_title_label = Label(win, text = "Book Title: '{}'".format(book_title))
-        book_title_label.grid(row = 2, column = 0)
+        book_title_label.config(font=(FONT, FONT_SIZE, STYLE))
+        book_title_label.place(relx=0.2, rely=0.3, anchor="w")
 
         member_id_label = Label(win, text = "Membership ID: '{}'".format(member_id))
-        member_id_label.grid(row = 3, column = 0)
+        member_id_label.config(font=(FONT, FONT_SIZE, STYLE))
+        member_id_label.place(relx=0.2, rely=0.4, anchor="w")
         
         member_name_label = Label(win, text = "Member Name: '{}'".format(member_name))
-        member_name_label.grid(row = 4, column = 0)
+        member_name_label.config(font=(FONT, FONT_SIZE, STYLE))
+        member_name_label.place(relx=0.2, rely=0.5, anchor="w")
         
         reserve_date_label = Label(win, text = "Reserve Date: '{}'".format(reserve_date))
-        reserve_date_label.grid(row = 5, column = 0)
+        reserve_date_label.config(font=(FONT, FONT_SIZE, STYLE))
+        reserve_date_label.place(relx=0.2, rely=0.6, anchor="w")
 
         confirm_button = Button(win, text = "Confirm Reservation", command = lambda: [add_reservation_record(), win.destroy()])
-        confirm_button.grid(row = 6, column = 0)
+        confirm_button.config(font=(FONT, FONT_SIZE, STYLE))
+        confirm_button.place(relx=0.3, rely=0.9, anchor="center")
 
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
-        back_button.grid(row = 6, column = 1)
+        back_button.config(font=(FONT, FONT_SIZE, STYLE))
+        back_button.place(relx=0.6, rely=0.9, anchor="center")
 
         win.mainloop()
 

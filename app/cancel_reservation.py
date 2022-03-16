@@ -114,12 +114,12 @@ def cancel_reservation_details():
     win.title("Cancel a Reservation")
 
     image = Image.open("bg1.jpg")
-	image = image.resize((1300, 650))
+    image = image.resize((1300, 650))
 
-	bg = ImageTk.PhotoImage(image)
-	canvas1 = Canvas(win, width = 1920, height = 1080)
-	canvas1.pack(fill = "both", expand =  True)
-	canvas1.create_image(0, 0, image = bg, anchor = "nw")
+    bg = ImageTk.PhotoImage(image)
+    canvas1 = Canvas(win, width = 1920, height = 1080)
+    canvas1.pack(fill = "both", expand =  True)
+    canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
 
     #creating the fields + labels for slide 38
@@ -149,6 +149,3 @@ def cancel_reservation_details():
     back_button.grid(row = 3, column = 3)
 
     win.mainloop()
-
-
-
