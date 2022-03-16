@@ -12,14 +12,14 @@ STYLE = 'bold'
 def reservation_main_menu():
     win = Toplevel()
     win.title("Reservations")
-    win.geometry("600x300")
+    win.geometry("1920x1080")
     
     image = Image.open('bg1.jpg')
     image = image.resize((1300, 650))
 
     bg = ImageTk.PhotoImage(image)
     canvas1 = Canvas(win, width = 1920, height = 1080)
-    canvas1.pack(fill = "both", expand =  True)
+    canvas1.pack(fill = "both", expand = True)
     canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
     label = Label(win, text="Select one of the Options below", fg='black', bg='#c5e3e5', relief='raised', width=60,
@@ -49,3 +49,7 @@ def reservation_main_menu():
     back_button.place(relx=0.5, rely=0.80, anchor="center")
     
     win.mainloop()
+
+reservation_main_menu()
+
+
