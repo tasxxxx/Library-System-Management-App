@@ -10,7 +10,7 @@ STYLE = 'bold'
 
 #slide 33
 def reservation_main_menu():
-    win =  Toplevel()
+    win = Toplevel()
     win.title("Reservations")
     win.geometry("600x300")
     
@@ -22,7 +22,7 @@ def reservation_main_menu():
     canvas1.pack(fill = "both", expand =  True)
     canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
-    label = tk.Label(root, text="Select one of the Options below", fg='black', bg='#c5e3e5', relief='raised', width=60,
+    label = Label(win, text="Select one of the Options below", fg='black', bg='#c5e3e5', relief='raised', width=60,
                      height=3)
     label.config(font=(FONT, FONT_SIZE, STYLE))
     label.place(relx=0.5, rely=0.09, anchor="center")
@@ -30,7 +30,7 @@ def reservation_main_menu():
     image = Image.open("reservations_photo.jpg")
     image = image.resize((400, 300), Image.ANTIALIAS)
     my_img = ImageTk.PhotoImage(image)
-    img_canvas = tk.Canvas(root, width=300, height=250)
+    img_canvas = Canvas(win, width=300, height=250)
     img_canvas.place(relx=0.2, rely=0.50, anchor="w")
     img_canvas.create_image(50, 50, anchor="w", image=my_img)
 
