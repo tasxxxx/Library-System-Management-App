@@ -1,8 +1,9 @@
 import sqlalchemy as db
 from tkinter import *
+from PIL import ImageTk, Image
 
 USERNAME = "root"
-PASSWORD = "mysqlUbae!!1"
+PASSWORD = "Dcmmq9ck5s24!"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -19,10 +20,18 @@ cursor = engine.connect()
 
 def booksAcquisition():
     
-    root = Tk()
+    root = Toplevel()
     root.title("Book Acquisition")
     root.geometry("1920x1080")
     root.configure(bg = "white")
+
+    image = Image.open("bg1.jpg")
+    image = image.resize((1300, 650))
+
+    bg = ImageTk.PhotoImage(image)
+    canvas1 = Canvas(root, width = 1920, height = 1080)
+    canvas1.pack(fill = "both", expand =  True)
+    canvas1.create_image(0, 0, image = bg, anchor = "nw")
 
     global accessionNo_field
     global title_field

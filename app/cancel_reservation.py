@@ -110,8 +110,17 @@ def confirmation_window():
         win.mainloop()
 
 def cancel_reservation_details():
-    win = Tk()
+    win = Toplevel()
     win.title("Cancel a Reservation")
+
+    image = Image.open("bg1.jpg")
+	image = image.resize((1300, 650))
+
+	bg = ImageTk.PhotoImage(image)
+	canvas1 = Canvas(win, width = 1920, height = 1080)
+	canvas1.pack(fill = "both", expand =  True)
+	canvas1.create_image(0, 0, image = bg, anchor = "nw")
+
 
     #creating the fields + labels for slide 38
     global accession_no_field

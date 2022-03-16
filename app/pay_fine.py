@@ -122,6 +122,7 @@ def confirmation_window():
         error_label = Label(win, text = "ERROR: No such member", bg = "#eb1e1e")
         error_label.config(font=(FONT, 20, STYLE))
         error_label.place(relx=0.5, rely=0.15, anchor="center")
+        
         back_button = Button(win, text = "Back to Payment Function", command = win.destroy)
         back_button.config(font=(FONT, 20, STYLE))
         back_button.place(relx=0.5, rely=0.8, anchor='center')
