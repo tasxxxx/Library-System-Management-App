@@ -2,7 +2,7 @@ import sqlalchemy as db
 from tkinter import *
 
 USERNAME = "root"
-PASSWORD = "Crunchyapples99"
+PASSWORD = "Dcmmq9ck5s24!"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -61,6 +61,17 @@ def confirmation_window():
         win.title("ERROR")
         
         error_label = Label(win, text = "ERROR: No such member and/or book exists")
+        error_label.grid(row = 0, column = 0)
+        back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
+        back_button.grid(row = 1, column = 0)
+
+        win.mainloop()
+
+    #if no cancellation date is given
+    if not cancel_date:
+        win.title("ERROR")
+        
+        error_label = Label(win, text = "ERROR: No cancellation date given")
         error_label.grid(row = 0, column = 0)
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
         back_button.grid(row = 1, column = 0)

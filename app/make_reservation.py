@@ -17,7 +17,16 @@ def add_reservation_record():
 
     #check that the book is not on loan or reserved
     check_on_loan = "SELECT * FROM Borrow WHERE accessionNo = '{}'".format(accession_no)
-    on_loan = cursor.execute(check_on_loan).fetchall()
+    loan_record = cursor.execute(check_on_loan).fetchall()
+    on_loan = False
+
+    #if there is a loan record, check if it has been returned
+    if loan_record:
+        for record in loan_record:
+            return_date = record[3]
+            if return_date == None:
+                on_loan = True
+    
     check_on_reserve = "SELECT * FROM Reservation WHERE accessionNo = '{}'".format(accession_no)
     on_reserve = cursor.execute(check_on_reserve).fetchall()
     
@@ -86,6 +95,17 @@ def confirmation_window():
         win.title("ERROR")
         
         error_label = Label(win, text = "ERROR: No such member and/or book exists")
+        error_label.grid(row = 0, column = 0)
+        back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
+        back_button.grid(row = 1, column = 0)
+
+        win.mainloop()
+
+    #no reserve date entered
+    if not reserve_date:
+        win.title("ERROR")
+        
+        error_label = Label(win, text = "ERROR: Reserve date not entered")
         error_label.grid(row = 0, column = 0)
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
         back_button.grid(row = 1, column = 0)

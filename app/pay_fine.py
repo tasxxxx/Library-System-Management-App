@@ -80,6 +80,17 @@ def confirmation_window():
 
         win.mainloop()
 
+    #no payment date or payment amount
+    if not payment_date or not payment_amount:
+        win.title("ERROR")
+        
+        error_label = Label(win, text = "ERROR: Missing fields")
+        error_label.grid(row = 0, column = 0)
+        back_button = Button(win, text = "Back to Payment Function", command = win.destroy)
+        back_button.grid(row = 1, column = 0)
+
+        win.mainloop()
+
     #slide 35
     else:
         win.title("Confirmation of Payment Details")
