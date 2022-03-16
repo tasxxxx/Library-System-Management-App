@@ -428,9 +428,8 @@ def outstanding_fines():
     outstanding_fines = '''SELECT m.memberId, m.memberName, m.faculty, m.phone, m.email 
                             FROM Fine f 
                             INNER JOIN Members m 
-                            ON f.memberId = m.memberId'''
-
-    ## TO-DO: DISPLAY FINE FOR MEMBERS WHO RETURNED AN OVERDUE BOOK
+                            ON f.memberId = m.memberId
+                            WHERE f.fineAmount <> 0'''
 
     result = cursor.execute(outstanding_fines).fetchall()
 
