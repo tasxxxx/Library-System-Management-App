@@ -1,44 +1,70 @@
 import sqlalchemy as db
 from tkinter import *
+from PIL import Image, ImageTk
+
+FONT = 'Arial'
+FONT_SIZE = 25
+SMALL_FONT_SIZE = 10
+STYLE = 'bold'
 
 USERNAME = "root"
-PASSWORD = "Hoepeng.0099"
+PASSWORD = "" ## enter password
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
 
 engine = db.create_engine('mysql://{0}:{1}@{2}:{3}/{4}'.format(USERNAME, PASSWORD, HOST, PORT, DB), echo = False)
 cursor = engine.connect()
-#metadata = db.MetaData()
 
 #slide 40 and success
 def cancel_reservation_record():
     win = Tk()
+    win.geometry("800x400")
 
     #check that the book is on reservation by member
     check_reservation = "SELECT * FROM Reservation WHERE accessionNo = '{}' AND reservationMemberId = '{}'".format(accession_no, member_id)
     reservation_record = cursor.execute(check_reservation).fetchall()
     
     if len(reservation_record) == 0:
+
+        win.configure(bg = "#eb1e1e")
+
         win.title("ERROR")
-        error_label = Label(win, text = "Member has no such reservation")
-        error_label.grid(row = 0, column = 0)
+        error_label = Label(win, text = "Member has no such reservation", bg = "#eb1e1e")
+        error_label.config(font=(FONT, FONT_SIZE, STYLE))
+        error_label.place(relx=0.5, rely=0.3, anchor="center")
+
         back_button = Button(win, text = "Back to Cancellation Function", command = win.destroy)
-        back_button.grid(row = 1, column = 0)
+        back_button.config(font=(FONT, 20, STYLE))
+        back_button.place(relx=0.5, rely=0.8, anchor='center')
+
+        ## added this
+        win.mainloop()
         
     else:
+
+        win.configure(bg = "#b0f556")
+
         #delete reservation record
         delete_reservation = "DELETE FROM Reservation WHERE accessionNo = '{}' AND reservationMemberId = '{}'".format(accession_no, member_id)
         cursor.execute(delete_reservation)
         win.title("RESERVATION SUCCESSFULLY CANCELLED")
-        success_label = Label(win, text = "Reservation has been successfully cancelled")
-        success_label.grid(row = 0, column = 0)
+
+        success_label = Label(win, text = "Reservation has been successfully cancelled", bg = "#b0f556")
+        success_label.config(font=(FONT, FONT_SIZE, STYLE))
+        success_label.place(relx=0.5, rely=0.3, anchor="center")
+
         ok_button = Button(win, text = "Ok", command = win.destroy)
-        ok_button.grid(row = 1, column = 0)
+        ok_button.config(font=(FONT, 20, STYLE))
+        ok_button.place(relx=0.5, rely=0.8, anchor='center')
+
+        ## added this
+        win.mainloop()
 
 #slide 39
 def confirmation_window():
     win = Tk()
+    win.geometry("800x400")
     win.title("Confirmation of Cancelling Reservation")
 
     #store the input into variables
@@ -59,58 +85,80 @@ def confirmation_window():
     #invalid member id or invalid accession_no
     if not member_name or not book_title:
         win.title("ERROR")
-        
-        error_label = Label(win, text = "ERROR: No such member and/or book exists")
-        error_label.grid(row = 0, column = 0)
+        win.configure(bg = "#eb1e1e")
+
+        error_label = Label(win, text = "ERROR: No such member and/or book exists", bg = "#eb1e1e")
+        error_label.config(font=(FONT, FONT_SIZE, STYLE))
+        error_label.place(relx=0.5, rely=0.3, anchor="center")
+
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
-        back_button.grid(row = 1, column = 0)
+        back_button.config(font=(FONT, 20, STYLE))
+        back_button.place(relx=0.5, rely=0.8, anchor='center')
 
         win.mainloop()
 
     #if no cancellation date is given
     if not cancel_date:
+
+        win.configure(bg = "#eb1e1e")
         win.title("ERROR")
         
-        error_label = Label(win, text = "ERROR: No cancellation date given")
-        error_label.grid(row = 0, column = 0)
+        error_label = Label(win, text = "ERROR: No cancellation date given", bg = "#eb1e1e")
+        error_label.config(font=(FONT, FONT_SIZE, STYLE))
+        error_label.place(relx=0.5, rely=0.3, anchor="center")
+
         back_button = Button(win, text = "Back to Reserve Function", command = win.destroy)
-        back_button.grid(row = 1, column = 0)
+        back_button.config(font=(FONT, 20, STYLE))
+        back_button.place(relx=0.5, rely=0.8, anchor='center')
 
         win.mainloop()
 
     #slide 39
     else:
+
+        win.configure(bg = "#b0f556")
+
         member_name = member_name[0][1]
         book_title = book_title[0][1]
         
         confirmation_label = Label(win, text = "Confirm Cancel Reservation Details To Be Correct")
-        confirmation_label.grid(row = 0, column = 0)
+        confirmation_label.config(font=(FONT, FONT_SIZE, STYLE))
+        confirmation_label.place(relx=0.2, rely=0.2, anchor="center")
         
         accession_no_label = Label(win, text = "Accession Number: '{}'".format(accession_no))
-        accession_no_label.grid(row = 1, column = 0)
+        accession_no_label.config(font=(FONT, FONT_SIZE, STYLE))
+        accession_no_label.place(relx=0.2, rely=0.3, anchor="center")
         
         book_title_label = Label(win, text = "Book Title: '{}'".format(book_title))
-        book_title_label.grid(row = 2, column = 0)
+        book_title_label.config(font=(FONT, FONT_SIZE, STYLE))
+        book_title_label.place(relx=0.2, rely=0.4, anchor="center")
 
         member_id_label = Label(win, text = "Membership ID: '{}'".format(member_id))
-        member_id_label.grid(row = 3, column = 0)
+        member_id_label.config(font=(FONT, FONT_SIZE, STYLE))
+        member_id_label.place(relx=0.2, rely=0.5, anchor="center")
         
         member_name_label = Label(win, text = "Member Name: '{}'".format(member_name))
-        member_name_label.grid(row = 4, column = 0)
+        member_name_label.config(font=(FONT, FONT_SIZE, STYLE))
+        member_name_label.place(relx=0.2, rely=0.6, anchor="center")
         
         cancel_date_label = Label(win, text = "Cancellation Date: '{}'".format(cancel_date))
-        cancel_date_label.grid(row = 5, column = 0)
+        cancel_date_label.config(font=(FONT, FONT_SIZE, STYLE))
+        cancel_date_label.place(relx=0.2, rely=0.7, anchor="center")
 
         confirm_button = Button(win, text = "Confirm Cancellation", command = lambda: [cancel_reservation_record(), win.destroy()])
-        confirm_button.grid(row = 6, column = 0)
+        confirm_button.config(font=(FONT, FONT_SIZE, STYLE))
+        confirm_button.place(relx=0.3, rely=0.8, anchor="center")
 
         back_button = Button(win, text = "Back to Cancellation Function", command = win.destroy)
-        back_button.grid(row = 6, column = 2)
+        back_button.config(font=(FONT, FONT_SIZE, STYLE))
+        back_button.place(relx=0.7, rely=0.8, anchor="center")
 
         win.mainloop()
 
 def cancel_reservation_details():
     win = Toplevel()
+    win.geometry("1980x1080")
+
     win.title("Cancel a Reservation")
 
     image = Image.open("bg1.jpg")
@@ -127,25 +175,36 @@ def cancel_reservation_details():
     global membership_id_field
     global cancel_date_field
     
-    accession_no_field = Entry(win, width = 30)
-    accession_no_field.grid(row = 0, column = 1)
+    accession_no_field = Entry(win, width=60)
+    accession_no_field.place(relx=0.6, rely=0.20, width=600, height=40, anchor="center")
+
     accession_no_label = Label(win, text = "Accession Number")
-    accession_no_label.grid(row = 0, column = 0)
+    accession_no_label.config(font=(FONT, FONT_SIZE, STYLE))
+    accession_no_label.place(relx=0.25, rely=0.20, anchor="center")
 
-    membership_id_field = Entry(win, width = 30)
-    membership_id_field.grid(row = 1, column = 1)
+    membership_id_field = Entry(win, width=60)
+    membership_id_field.place(relx=0.6, rely=0.30, width=600, height=40, anchor="center")
+
     membership_id_label = Label(win, text = "Membership ID")
-    membership_id_label.grid(row = 1, column = 0)
+    membership_id_label.config(font=(FONT, FONT_SIZE, STYLE))
+    membership_id_label.place(relx=0.25, rely=0.30, anchor="center")
 
-    cancel_date_field = Entry(win, width = 30)
-    cancel_date_field.grid(row = 2, column = 1)
+    cancel_date_field = Entry(win, width=60)
+    cancel_date_field.place(relx=0.6, rely=0.40, width=600, height=40, anchor="center")
+
     cancel_date_label = Label(win, text = "Cancellation Date")
-    cancel_date_label.grid(row = 2, column = 0)
+    cancel_date_label.config(font=(FONT, FONT_SIZE, STYLE))
+    cancel_date_label.place(relx=0.25, rely=0.40, anchor="center")
 
     cancel_button = Button(win, text = "Cancel Reservation", command = confirmation_window)
-    cancel_button.grid(row = 3, column = 0)
+    cancel_button.config(font=(FONT, FONT_SIZE, STYLE))
+    cancel_button.place(relx=0.3, rely=0.8, anchor="center")
 
     back_button = Button(win, text = "Back to Reservations Menu", command = win.destroy)
-    back_button.grid(row = 3, column = 3)
+    back_button.config(font=(FONT, FONT_SIZE, STYLE))
+    back_button.place(relx=0.7, rely=0.8, anchor="center")
 
     win.mainloop()
+
+
+

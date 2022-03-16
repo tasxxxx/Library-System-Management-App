@@ -15,7 +15,7 @@ def reservation_main_menu():
     win.geometry("1920x1080")
     
     image = Image.open('bg1.jpg')
-    image = image.resize((1300, 650))
+    image = image.resize((1920, 1080))
 
     bg = ImageTk.PhotoImage(image)
     canvas1 = Canvas(win, width = 1920, height = 1080)
@@ -34,7 +34,6 @@ def reservation_main_menu():
     img_canvas.place(relx=0.2, rely=0.50, anchor="w")
     img_canvas.create_image(50, 50, anchor="w", image=my_img)
 
-
     #creating the buttons
     reserve_button = Button(win, text = "Book Reservation", command = reservation_details)
     reserve_button.config(font=(FONT, FONT_SIZE, STYLE))
@@ -49,7 +48,5 @@ def reservation_main_menu():
     back_button.place(relx=0.5, rely=0.80, anchor="center")
     
     win.mainloop()
-
-reservation_main_menu()
 
 
