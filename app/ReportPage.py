@@ -519,8 +519,9 @@ def reportsMenu():
     image = Image.open("pexels-photomix-company-95916.jpg")
     image = image.resize((400, 300), Image.ANTIALIAS)
     my_img = ImageTk.PhotoImage(image)
-    my_label = tk.Label(image=my_img)
-    my_label.grid(row = 1, column = 0, rowspan=5, padx=10, pady=10)
+    img_canvas = tk.Canvas(root, width=400, height=300)
+    img_canvas.grid(row = 1, column = 0, rowspan=5, padx=10, pady=10)
+    img_canvas.create_image(10, 10, anchor="nw", image=my_img)
 
     # Create buttons to initiate window opening for the various options
     booksearch_button = tk.Button(root, text="Book Search", command=open1)
