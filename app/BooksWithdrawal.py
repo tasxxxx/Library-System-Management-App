@@ -2,7 +2,7 @@ import sqlalchemy as db
 from tkinter import *
 
 USERNAME = "root"
-PASSWORD = "mysqlUbae!!1"
+PASSWORD = "Dcmmq9ck5s24!"
 HOST = "localhost"
 PORT = 3306
 DB = "Library"
@@ -49,7 +49,7 @@ def withdraw_books():
     win = Tk()
 
     # Predicate: Whether book is on loan / on reservation
-    sql1 = "SELECT * FROM Borrow WHERE accessionNo = '{}' AND returnDate = null".format(accessionNo)
+    sql1 = "SELECT * FROM Borrow WHERE accessionNo = '{}' AND returnDate IS NULL".format(accessionNo)
     on_loan = cursor.execute(sql1).fetchall()
     sql2 = "SELECT * FROM Reservation WHERE accessionNo = '{}'".format(accessionNo)
     on_reservation = cursor.execute(sql2).fetchall()
@@ -149,22 +149,22 @@ def popup_window():
             
         label1 = Label(win1, text = "Accession Number: '{}'".format(accessionNo), bg = "#FFE45E")
         label1.config(font=(FONT, FONT_SIZE, STYLE))
-        label1.place(relx=0.4, rely=0.2, anchor="left")
+        label1.place(relx=0.4, rely=0.2, anchor="w")
         label2 = Label(win1, text = "Title: '{}'".format(book_title), bg = "#FFE45E")
         label2.config(font=(FONT, FONT_SIZE, STYLE))
-        label2.place(relx=0.4, rely=0.3, anchor="left")
+        label2.place(relx=0.4, rely=0.3, anchor="w")
         label3 = Label(win1, text = "Authors: '{}'".format(', '.join(authors)), bg = "#FFE45E")
         label3.config(font=(FONT, FONT_SIZE, STYLE))
-        label3.place(relx=0.4, rely=0.4, anchor="left")
+        label3.place(relx=0.4, rely=0.4, anchor="w")
         label4 = Label(win1, text = "ISBN: '{}'".format(isbn), bg = "#FFE45E")
         label4.config(font=(FONT, FONT_SIZE, STYLE))
-        label4.place(relx=0.4, rely=0.5, anchor="left")
+        label4.place(relx=0.4, rely=0.5, anchor="w")
         label5 = Label(win1, text = "Publisher: '{}'".format(publisher), bg = "#FFE45E")
         label5.config(font=(FONT, FONT_SIZE, STYLE))
-        label5.place(relx=0.4, rely=0.6, anchor="left")
+        label5.place(relx=0.4, rely=0.6, anchor="w")
         label6 = Label(win1, text = "Year: '{}'".format(year), bg = "#FFE45E")
         label6.config(font=(FONT, FONT_SIZE, STYLE))
-        label6.place(relx=0.4, rely=0.7, anchor="left")
+        label6.place(relx=0.4, rely=0.7, anchor="w")
 
         button1 = Button(win1, text = "Confirm Withdrawal", bg = "#5AA9E6", command = lambda: [withdraw_books(), win1.destroy()])
         button1.config(font=(FONT, FONT_SIZE, STYLE))
@@ -174,3 +174,4 @@ def popup_window():
         button2.place(relx=0.6, rely=0.9, anchor="center")
 
     win1.mainloop()
+
